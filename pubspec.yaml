@@ -38,6 +38,7 @@ dependencies:
   draggable_bottom_sheet: ^1.0.2
   firebase_core: ^2.24.2
   mobile_scanner: ^5.1.1
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:

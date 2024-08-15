@@ -67,14 +67,9 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                           setState(() {
                             isScanning = false; // Stop scanning
                           });
-                          Navigator.of(context)
-                              .pushNamed('/scan-successful-screen');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('QR Code Scanned Successfully'),
-                              backgroundColor: custom_colors.accentGreen,
-                            ),
-                          );
+                          Navigator.of(context).pushNamed(
+                              '/scan-successful-screen',
+                              arguments: barcode.rawValue);
                           break; // Exit the loop after the first successful scan
                         }
                       }
