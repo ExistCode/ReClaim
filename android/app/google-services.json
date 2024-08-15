@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444912210132",
+    "project_id": "reclaim-ee3c6",
+    "storage_bucket": "reclaim-ee3c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444912210132:android:5da0f03fb18e28a253eb41",
+        "android_client_info": {
+          "package_name": "com.example.reclaim"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCESxAfWLPYQytbL5TqqJpOnz1adXNLGnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
