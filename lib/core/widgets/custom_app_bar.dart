@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
             width: 12,
           ),
           Text(
-            'Bread&Butter',
+            'ReClaim',
             style: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
           ),
@@ -31,14 +31,15 @@ class CustomAppBar extends StatelessWidget {
       ),
       actions: [
         Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              child: Icon(
-                Icons.open_in_new_rounded,
-                color: Colors.white,
-              ),
-              onTap: () {},
-            ))
+          padding: EdgeInsets.only(right: 20.0),
+          child: GestureDetector(
+            child: Icon(
+              Icons.open_in_new_rounded,
+              color: Colors.white,
+            ),
+            onTap: () {},
+          ),
+        )
       ],
     );
   }

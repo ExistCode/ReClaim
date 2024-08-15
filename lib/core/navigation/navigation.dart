@@ -33,11 +33,11 @@ class NavigationState extends State<Navigation> {
           backgroundColor: custom_colors.navbarBackground,
           currentIndex: currentIndex,
           onTap: (int newIndex) {
-            {
-              setState(() {
-                currentIndex = newIndex;
-              });
-            }
+            // {
+            //   setState(() {
+            //     currentIndex = newIndex;
+            //   });
+            // }
           },
           items: [
             BottomNavigationBarItem(

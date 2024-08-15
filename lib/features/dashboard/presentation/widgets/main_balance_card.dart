@@ -28,7 +28,7 @@ class MainBalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Remaining budget',
+            'Current balance',
             style:
                 TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
           ),

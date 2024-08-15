@@ -119,11 +119,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 fontSize: 26,
                                 fontWeight: FontWeight.w600),
                           ),
-                          // Text(
-                          //   '${(totalSpending / Provider.of<UserProvider>(context).monthlyBudget * 100).toStringAsFixed(2)}% Used',
-                          //   style: TextStyle(
-                          //       color: custom_colors.accentGreen, fontSize: 16),
-                          // )
+                          Text(
+                            '70% Used',
+                            style: TextStyle(
+                                color: custom_colors.accentGreen, fontSize: 16),
+                          )
                         ],
                       )
                     ],
