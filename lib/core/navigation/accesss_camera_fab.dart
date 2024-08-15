@@ -5,16 +5,16 @@ class AccessCameraFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
-      width: 70,
+      height: 64,
+      width: 64,
       child: FloatingActionButton(
         backgroundColor: custom_colors.navbarBackground,
         onPressed: () {
           Navigator.of(context).pushNamed('/main-camera-screen');
         },
         child: Icon(
-          Icons.add_rounded,
-          size: 40,
+          Icons.camera_alt_rounded,
+          size: 32,
           color: Colors.white,
         ),
       ),
