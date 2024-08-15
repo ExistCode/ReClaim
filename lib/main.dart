@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'firebase_options.dart';
 import '../core/navigation/navigation.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ReClaim',
       theme: ThemeData(fontFamily: 'Inter'),
-      home: Navigation(),
+      home: MainCameraScreen(),
     );
   }
 }
