@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/item_count.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
+import 'dart:convert';
 
 class ScanSuccessfulScreen extends StatefulWidget {
   static const routeName = '/scan-successful-screen';
@@ -26,10 +28,17 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
   @override
   Widget build(BuildContext context) {
     String codeResult = ModalRoute.of(context)!.settings.arguments as String;
-    int plasticBottles = 10;
-    int canBottles = 5;
-    int miscItems = 3;
-    int totalTokens = plasticBottles * 10 + canBottles * 5 + miscItems * 3;
+    print("CodeResults: " + codeResult);
+    // Replace single quotes with double quotes for valid JSON format
+    String validJsonString = codeResult.replaceAll("'", '"');
+    // Parse the codeResult as JSON
+    Map<String, dynamic> resultMap = jsonDecode(validJsonString);
+    ItemCount itemCount = parseMessage(resultMap['message']);
+    int plasticBottles = itemCount.plastic;
+    int canBottles = itemCount.can;
+    int carton = itemCount.carton;
+    int miscItems = itemCount.miscItems;
+    int totalTokens = plasticBottles * 10 + canBottles * 5 + carton * 3+ miscItems * 0;
 
     return Scaffold(
       body: SafeArea(
@@ -117,6 +126,15 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
+                        "$carton",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
                         "$miscItems",
                         style: TextStyle(
                           color: Colors.white,
@@ -140,6 +158,14 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       SizedBox(height: 5),
                       Text(
                         "can bottles",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "Cartons",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
