@@ -92,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset(
-                'assets/images/app_logo.png',
+                'assets/images/app-logo.png',
                 height: 50,
                 width: 50,
               ),
