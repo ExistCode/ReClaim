@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainCameraScreen extends StatefulWidget {
@@ -13,6 +14,20 @@ class MainCameraScreen extends StatefulWidget {
 
 class _MainCameraScreenState extends State<MainCameraScreen> {
   bool isScanning = true; // Variable to control scanning state
+  MobileScannerController cameraController = MobileScannerController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Optionally, you can start the camera here
+    cameraController.start();
+  }
+
+  @override
+  void dispose() {
+    cameraController.dispose(); // Dispose the controller when not in use
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +71,7 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                 SizedBox(
                   height: 400,
                   child: MobileScanner(
-                    // Only scan if isScanning is true
+                    controller: cameraController,
                     onDetect: (capture) {
                       if (!isScanning) return; // Prevent further scans
 
