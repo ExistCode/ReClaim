@@ -41,6 +41,8 @@ dependencies:
   lottie: ^3.1.2
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.1
+  aptos: ^0.0.5
+  web3auth_flutter: ^5.0.3
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +76,7 @@ flutter:
     - assets/images/app-logo.png
     - assets/images/logo-transparent.png
     - assets/images/logo-splashscreen.png
+    - assets/images/aptos-logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
