@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 
 import '../../../../core/theme/colors.dart' as custom_colors;
 
@@ -11,7 +10,7 @@ class RecentTransactionsCard extends StatelessWidget {
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40), topRight: Radius.circular(40)),
       child: Container(
-        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         width: double.infinity,
         color: custom_colors.darkGray,
         child: Column(
@@ -24,7 +23,7 @@ class RecentTransactionsCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -66,7 +65,7 @@ class ExpandedRecentTransactionsCard extends StatelessWidget {
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40), topRight: Radius.circular(40)),
       child: Container(
-        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         width: double.infinity,
         height: double.infinity,
         color: custom_colors.darkGray,
@@ -80,7 +79,7 @@ class ExpandedRecentTransactionsCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -98,7 +97,7 @@ class ExpandedRecentTransactionsCard extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Expanded(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
@@ -10,11 +9,11 @@ class MainBalanceCard extends StatelessWidget {
         "0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72";
 
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       height: 200,
       width: double.infinity,
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('assets/images/card_background.png'),
             fit: BoxFit.cover,
           ),

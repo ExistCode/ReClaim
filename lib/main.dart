@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
 import 'features/wallet/presentation/screens/wallet_registration_screen.dart';
+import 'package:reclaim/core/navigation/navigation.dart';
+import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
 import 'firebase_options.dart';
-import '../core/navigation/navigation.dart';
+import '../features/authentication/presentation/screens/sign_up_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ReClaim',
       theme: ThemeData(fontFamily: 'Inter'),
-      home: Navigation(),
+      home: LogInScreen(),
       routes: {
         MainCameraScreen.routeName: (context) => const MainCameraScreen(),
         ScanSuccessfulScreen.routeName: (context) =>
