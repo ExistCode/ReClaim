@@ -2,7 +2,11 @@
 // import 'package:flutter/material.dart';
 // import '../auth.dart';
 // import '../models/user_model.dart';
+import 'package:flutter/material.dart';
 
+class TransactionProvider with ChangeNotifier{
+  
+}
 // class UserProvider with ChangeNotifier {
 //   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 //   UserModel userProviderData = UserModel(
