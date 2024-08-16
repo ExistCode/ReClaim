@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainCameraScreen extends StatefulWidget {
@@ -31,6 +33,10 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -82,6 +88,7 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                           setState(() {
                             isScanning = false; // Stop scanning
                           });
+                          transactionProvider.createNewTransaction("","",currentUser!.uid, 0,0,0,0,0.0,);
                           Navigator.of(context).pushNamed(
                               '/scan-successful-screen',
                               arguments: barcode.rawValue);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/item_count.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
 
@@ -38,7 +39,8 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
     int canBottles = itemCount.can;
     int carton = itemCount.carton;
     int miscItems = itemCount.miscItems;
-    int totalTokens = plasticBottles * 10 + canBottles * 5 + carton * 3+ miscItems * 0;
+    int totalTokens =
+        plasticBottles * 10 + canBottles * 5 + carton * 3 + miscItems * 0;
 
     return Scaffold(
       body: SafeArea(

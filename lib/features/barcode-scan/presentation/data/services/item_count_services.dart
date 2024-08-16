@@ -1,16 +1,4 @@
-class ItemCount {
-  int plastic;
-  int can;
-  int carton;
-  int miscItems;
-
-  ItemCount({
-    required this.plastic,
-    required this.can,
-    required this.carton,
-    required this.miscItems,
-  });
-}
+import '../models/item_count.dart';
 
 ItemCount parseMessage(String message) {
   // Split the message by commas
