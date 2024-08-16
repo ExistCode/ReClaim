@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
@@ -13,11 +12,11 @@ class MainBalanceCard extends StatelessWidget {
         '$lastDateOfTheMonth/${todayDate.month}/${todayDate.year}';
 
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       height: 200,
       width: double.infinity,
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('assets/images/card_background.png'),
             fit: BoxFit.cover,
           ),
@@ -34,7 +33,7 @@ class MainBalanceCard extends StatelessWidget {
           ),
           Text(
             'RM${remainingBudget.toString()}',
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30),
           ),
           Text(
