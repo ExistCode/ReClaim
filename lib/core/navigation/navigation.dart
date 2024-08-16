@@ -43,7 +43,7 @@ class NavigationState extends State<Navigation> {
             BottomNavigationBarItem(
                 label: '',
                 icon: Icon(
-                  Icons.home_rounded,
+                  Icons.bar_chart_rounded,
                   color: currentIndex == 0
                       ? custom_colors.accentGreen
                       : Colors.white.withOpacity(0.5),
@@ -51,7 +51,7 @@ class NavigationState extends State<Navigation> {
                 )),
             BottomNavigationBarItem(
                 label: '',
-                icon: Icon(Icons.bar_chart_rounded,
+                icon: Icon(Icons.diversity_1_rounded,
                     color: currentIndex == 1
                         ? custom_colors.accentGreen
                         : Colors.white.withOpacity(0.5),

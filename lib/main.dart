@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
 import 'firebase_options.dart';
 import '../features/authentication/presentation/screens/sign_up_screen.dart';
 
@@ -24,7 +26,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ReClaim',
       theme: ThemeData(fontFamily: 'Inter'),
-      home: SignUpScreen(),
+      home: Navigation(),
+      routes: {
+        MainCameraScreen.routeName: (context) => const MainCameraScreen(),
+        ScanSuccessfulScreen.routeName: (context) =>
+            const ScanSuccessfulScreen(),
+      },
     );
   }
 }
