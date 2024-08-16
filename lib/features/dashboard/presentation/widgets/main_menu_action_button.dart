@@ -5,7 +5,7 @@ class MainMenuActionButton extends StatelessWidget {
   final Color color;
   final IconData icon;
 
-  MainMenuActionButton(this.text, this.color, this.icon);
+  const MainMenuActionButton(this.text, this.color, this.icon);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,12 @@ class MainMenuActionButton extends StatelessWidget {
               icon,
               color: Colors.white,
             ),
-            SizedBox(
+            const SizedBox(
               width: 4,
             ),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w600),

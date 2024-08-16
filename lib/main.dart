@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
 import 'firebase_options.dart';
-import '../core/navigation/navigation.dart';
+import '../features/authentication/presentation/screens/sign_up_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding
