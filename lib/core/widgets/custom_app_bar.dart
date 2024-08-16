@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
           Container(
             width: 30,
             child: Image.asset(
-              'assets/images/app_logo.png',
+              'assets/images/logo-transparent.png',
               fit: BoxFit.fitWidth,
             ),
           ),
