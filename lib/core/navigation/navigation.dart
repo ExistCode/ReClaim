@@ -11,14 +11,14 @@ class Navigation extends StatefulWidget {
 
 class NavigationState extends State<Navigation> {
   static GlobalKey<NavigationState> globalKey =
-      new GlobalKey<NavigationState>();
+      GlobalKey<NavigationState>();
   int currentIndex = 0;
   List<Widget> screens = [DashboardScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
           preferredSize: Size.fromHeight(56), child: CustomAppBar()),
       floatingActionButton: AccessCameraFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

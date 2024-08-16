@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import '../core/navigation/navigation.dart';
+import '../features/authentication/presentation/screens/sign_up_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ReClaim',
       theme: ThemeData(fontFamily: 'Inter'),
-      home: Navigation(),
+      home: SignUpScreen(),
     );
   }
 }

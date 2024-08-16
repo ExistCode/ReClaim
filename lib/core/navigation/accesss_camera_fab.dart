@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:provider/provider.dart';
 
 import '../theme/colors.dart' as custom_colors;
 
@@ -11,15 +10,15 @@ class AccessCameraFab extends StatelessWidget {
 
   String expenseOrIncome = 'expense';
 
-  final _transactionAddedSnackBar = SnackBar(
+  final _transactionAddedSnackBar = const SnackBar(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: EdgeInsets.all(20),
       backgroundColor: custom_colors.accentGreen,
       behavior: SnackBarBehavior.floating,
       elevation: 40,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
-      content: const Text(
+      content: Text(
         'Successfuly added a new transaction!',
         style: TextStyle(color: Colors.white),
       ));
@@ -33,21 +32,21 @@ class AccessCameraFab extends StatelessWidget {
             return AlertDialog(
               elevation: 20,
               backgroundColor: custom_colors.navbarBackground,
-              title: Text(
+              title: const Text(
                 'New Transaction',
                 style: TextStyle(
                     color: custom_colors.accentGreen,
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
               ),
-              titlePadding: EdgeInsets.all(20),
-              contentPadding: EdgeInsets.symmetric(horizontal: 20),
-              actionsPadding: EdgeInsets.all(20),
+              titlePadding: const EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+              actionsPadding: const EdgeInsets.all(20),
               content: Container(
                 height: 250,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     StatefulBuilder(
@@ -73,7 +72,7 @@ class AccessCameraFab extends StatelessWidget {
                                     color: expenseOrIncome == 'expense'
                                         ? custom_colors.accentGreen
                                         : custom_colors.navbarBackground,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(8),
                                         bottomLeft: Radius.circular(8))),
                                 child: Center(
@@ -109,7 +108,7 @@ class AccessCameraFab extends StatelessWidget {
                                     color: expenseOrIncome == 'income'
                                         ? custom_colors.accentGreen
                                         : custom_colors.navbarBackground,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         topRight: Radius.circular(8),
                                         bottomRight: Radius.circular(8))),
                                 child: Center(
@@ -131,16 +130,16 @@ class AccessCameraFab extends StatelessWidget {
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     TextField(
                       controller: _textControllerAmount,
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: custom_colors.accentGreen, width: 2)),
                           enabledBorder: OutlineInputBorder(
@@ -152,14 +151,14 @@ class AccessCameraFab extends StatelessWidget {
                               color: Colors.white.withOpacity(0.5),
                               fontSize: 16)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     TextField(
                       controller: _textControllerTitle,
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
                       decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: custom_colors.accentGreen, width: 2)),
                           enabledBorder: OutlineInputBorder(
@@ -181,7 +180,7 @@ class AccessCameraFab extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.white)),
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(
                           fontSize: 16, color: custom_colors.accentGreen),
@@ -197,7 +196,7 @@ class AccessCameraFab extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             custom_colors.accentGreen)),
-                    child: Text(
+                    child: const Text(
                       'Enter',
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
@@ -215,7 +214,7 @@ class AccessCameraFab extends StatelessWidget {
       child: FloatingActionButton(
         backgroundColor: custom_colors.navbarBackground,
         onPressed: () {},
-        child: Icon(
+        child: const Icon(
           Icons.add_rounded,
           size: 40,
           color: Colors.white,
