@@ -22,7 +22,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double totalSpending = 500;
+    double lifetimeEarnings = 3.0089;
+    int lifetimeRecycledItems = 25;
 
     // if (TransactionProvider.isLoading == true && timerHasStrarted == false) {
     //   startLoading();
@@ -103,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         height: 60,
                       ),
                       Text(
-                        'Total Spending',
+                        'Lifetime Earnings',
                         style: TextStyle(
                             color: Colors.white.withOpacity(0.8), fontSize: 16),
                       ),
@@ -112,14 +113,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'RM$totalSpending',
-                            style: const TextStyle(
+                            '$lifetimeEarnings APT',
+                            style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 26,
                                 fontWeight: FontWeight.w600),
                           ),
-                          const Text(
-                            '70% Used',
+                          Text(
+                            '$lifetimeRecycledItems items recycled',
                             style: TextStyle(
                                 color: custom_colors.accentGreen, fontSize: 16),
                           )

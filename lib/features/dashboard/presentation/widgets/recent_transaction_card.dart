@@ -30,7 +30,7 @@ class RecentTransactionsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Recent Transactions',
+                  'Recent Activities',
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.7), fontSize: 16),
                 ),
@@ -86,7 +86,7 @@ class ExpandedRecentTransactionsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Recent Transactions',
+                  'Recent Activities',
                   style: TextStyle(
                       color: Colors.white.withOpacity(0.7), fontSize: 16),
                 ),
