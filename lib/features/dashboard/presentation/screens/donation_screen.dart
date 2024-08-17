@@ -26,84 +26,84 @@ class _DonationScreenState extends State<DonationScreen> {
       imagePath: 'assets/images/StreetCleaning.png',
       title: "Street Cleanup Program",
       progressText: "RCLM. 2,000 / RCLM. 3,000",
-      progressValue: 0.7, // 2,000 / 3,000
+      progressValue: 0.7,
       category: "Recycling",
     ),
     const DonationBox(
       imagePath: 'assets/images/Recycling-bins-side.png',
       title: "Neighborhood Recycling Initiative",
       progressText: "RCLM. 1,500 / RCLM. 2,000",
-      progressValue: 0.75, // 1,500 / 2,000
+      progressValue: 0.75,
       category: "Recycling",
     ),
     const DonationBox(
       imagePath: 'assets/images/items-recycling-centre.png',
       title: "Global Recycling Day 2024!",
       progressText: "RCLM. 400 / RCLM. 500",
-      progressValue: 0.8, // 400 / 500
+      progressValue: 0.8,
       category: "Recycling",
     ),
     const DonationBox(
       imagePath: 'assets/images/SaveForest.png',
       title: "Save the Forest Education Fund",
       progressText: "RCLM. 200 / RCLM. 500",
-      progressValue: 0.4, // 200 / 500
+      progressValue: 0.4,
       category: "Education",
     ),
     const DonationBox(
       imagePath: 'assets/images/24EPBS_ENVIRONMENT.png',
       title: "Recycling Education for Kids",
       progressText: "RCLM. 60 / RCLM. 200",
-      progressValue: 0.3, // 60 / 200
+      progressValue: 0.3,
       category: "Education",
     ),
     const DonationBox(
       imagePath: 'assets/images/thumbnail_environment-education.png',
       title: "Environmental Education Campaign",
       progressText: "RCLM. 150 / RCLM. 500",
-      progressValue: 0.3, // 150 / 500
+      progressValue: 0.3,
       category: "Education",
     ),
     const DonationBox(
       imagePath: 'assets/images/environmental-education.png',
       title: "Green Energy Awareness Campaign",
       progressText: "RCLM. 750 / RCLM. 1,000",
-      progressValue: 0.75, // 750 / 1,000
+      progressValue: 0.75,
       category: "Green\nTechnology",
     ),
     const DonationBox(
       imagePath: 'assets/images/SolarPanel.png',
       title: "Solar Panel Installation Project",
       progressText: "RCLM. 1,000 / RCLM. 2,500",
-      progressValue: 0.4, // 1,000 / 2,500
+      progressValue: 0.4,
       category: "Green\nTechnology",
     ),
     const DonationBox(
       imagePath: 'assets/images/why-is-recycling-important-1587135431361.png',
       title: "Community Recycling Programs",
       progressText: "RCLM. 100 / RCLM. 300",
-      progressValue: 0.33, // 100 / 300
+      progressValue: 0.33,
       category: "Recycling",
     ),
     const DonationBox(
       imagePath: 'assets/images/river_cleaning.png',
       title: "River Cleanups Technology",
       progressText: "RCLM. 3000 / RCLM. 5000",
-      progressValue: 0.6, // 300 / 500
+      progressValue: 0.6,
       category: "Green\nTechnology",
     ),
     const DonationBox(
       imagePath: 'assets/images/ADAS-25-1-2.png',
       title: "Waste Management Fundraiser",
       progressText: "RCLM. 400 / RCLM. 500",
-      progressValue: 0.8, // 400 / 500
+      progressValue: 0.8,
       category: "Waste\nManagement",
     ),
     const DonationBox(
       imagePath: 'assets/images/GettyImages-1353301481-scaled.png',
       title: "Community Beach Cleanup Fund",
       progressText: "RCLM. 250 / RCLM. 400",
-      progressValue: 0.625, // 250 / 400
+      progressValue: 0.625,
       category: "Waste\nManagement",
     ),
   ];
