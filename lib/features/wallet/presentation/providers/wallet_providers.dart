@@ -74,4 +74,50 @@ class WalletProvider extends ChangeNotifier {
     _walletAddress = prefs.getString('walletAddress');
     notifyListeners(); // Notify listeners that the wallet address has been loaded
   }
+
+
+Future<String> WalletVerificationId(String walletId) async {
+    final options = Options(
+      headers: {
+        'client_id': dotenv.env['CLIENT_ID'],
+        'client_secret': dotenv.env['CLIENT_SECRET'],
+        'Content-Type': 'application/json',
+      },
+      sendTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+    );
+
+    try {
+      final response = await _dio
+          .get(
+            'http://service-testnet.maschain.com/api/wallet/wallet/$walletId',
+            options: options,
+          )
+          .timeout(const Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        final data = response.data;
+        if (data['status'] == 200) {
+          return 'Wallet ID is valid! Name: ${data['result']['name']}';
+        } else {
+          return 'Wallet ID does not exist.';
+        }
+      } else {
+        return 'Wallet ID does not exist.';
+      }
+    } on DioException catch (e) {
+      switch (e.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+          return 'Connection timed out. Please try again.';
+        case DioExceptionType.receiveTimeout:
+          return 'Receive timeout. Please try again.';
+        case DioExceptionType.badResponse:
+          return 'Wallet ID does not exist.';
+        default:
+          return 'Error: ${e.message}';
+      }
+    }
+  }
+
 }
