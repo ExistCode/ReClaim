@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:reclaim/core/models/app_user.dart';
-import 'package:reclaim/features/authentication/presentation/screens/wallet_auth_screen.dart';
+import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_successful_provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ReClaim',
         theme: ThemeData(fontFamily: 'Inter'),
-        home: WalletVerificationScreen(),
+        home: LogInScreen(),
         routes: {
           MainCameraScreen.routeName: (context) => const MainCameraScreen(),
           ScanSuccessfulScreen.routeName: (context) =>

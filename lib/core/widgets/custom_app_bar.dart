@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
 import '../theme/colors.dart' as custom_colors;
 
 class CustomAppBar extends StatelessWidget {
@@ -37,7 +39,17 @@ class CustomAppBar extends StatelessWidget {
               Icons.open_in_new_rounded,
               color: Colors.white,
             ),
-            onTap: () {},
+            onTap: () async{
+              // Sign out the user
+              await FirebaseAuth.instance.signOut();
+
+              // Navigate to the login page
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => LogInScreen(),
+                ),
+              );
+            },
           ),
         )
       ],
