@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
+import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import '../widgets/custom_error_dialog.dart';
 import 'dart:async';
@@ -9,6 +12,9 @@ import 'dart:async';
 
 
 class SignUpScreen extends StatefulWidget {
+  static const routeName = '/sign[up-screen';
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -37,12 +43,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ).timeout(const Duration(seconds: 6), onTimeout: () {
         throw TimeoutException('The request has timed out');
       });
-      print('User signed up');
-      // Navigate to the destination screen after successful sign-up
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LogInScreen())
-      );
+      User? firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        AppUser user = AppUser(
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          // Add other necessary properties
+        );
+        // Navigate to DashboardScreen with the user object
+        print("before navigate: ${firebaseUser.email}");
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Navigation(user: user),
+          ),
+        );
+      }
       return userCredential;
     } catch (e) {
       String errorMessage;

@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
@@ -10,11 +13,18 @@ import '../widgets/main_menu_action_button.dart';
 import '../widgets/recent_transaction_card.dart';
 
 class DashboardScreen extends StatefulWidget {
+  static const routeName = '/dashboard-screen';
+  final AppUser user;
+
+  DashboardScreen({required this.user});
+
+
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
   //Get BottomNavBar from GlobalKey to access onTap
   BottomNavigationBar get navigationBar {
     return NavigationState.globalKey.currentWidget as BottomNavigationBar;
@@ -22,8 +32,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double lifetimeEarnings = 3.0089;
-    int lifetimeRecycledItems = 25;
+    double lifetimeEarnings = 0.00;
+    int lifetimeRecycledItems = 33;
+    AppUser user = widget.user; 
+    print("In dashboard screen: ${user.email}"); 
 
     // if (TransactionProvider.isLoading == true && timerHasStrarted == false) {
     //   startLoading();
