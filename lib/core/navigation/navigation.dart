@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/accesss_camera_fab.dart';
+import 'package:reclaim/features/dashboard/presentation/screens/donation_screen.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../widgets/custom_app_bar.dart';
 import '../theme/colors.dart' as custom_colors;
 import 'package:firebase_auth/firebase_auth.dart';
-
-
 
 class Navigation extends StatefulWidget {
   final AppUser user;
@@ -17,8 +16,7 @@ class Navigation extends StatefulWidget {
 }
 
 class NavigationState extends State<Navigation> {
-  static GlobalKey<NavigationState> globalKey =
-      GlobalKey<NavigationState>();
+  static GlobalKey<NavigationState> globalKey = GlobalKey<NavigationState>();
   int currentIndex = 0;
 
   late List<Widget> screens;
@@ -27,9 +25,8 @@ class NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     // Initialize the screens list with the user parameter
-    screens = [DashboardScreen(user: widget.user )];
+    screens = [DashboardScreen(user: widget.user), DonationScreen()];
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +46,9 @@ class NavigationState extends State<Navigation> {
           backgroundColor: custom_colors.navbarBackground,
           currentIndex: currentIndex,
           onTap: (int newIndex) {
-            // setState(() {
-            //   currentIndex = newIndex;
-            // });
+            setState(() {
+              currentIndex = newIndex;
+            });
           },
           items: [
             BottomNavigationBarItem(

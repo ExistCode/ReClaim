@@ -29,7 +29,7 @@ class MainBalanceCard extends StatelessWidget {
                 TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
           ),
           Text(
-            '${currentBal.toString()} APT',
+            '${currentBal.toString()} RCLM',
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.w600, fontSize: 32),
           ),
