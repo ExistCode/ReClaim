@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print("before navigate: ${firebaseUser.email}");
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => WalletAuthScreen(),
+            builder: (context) => WalletAuthScreen(user: user,),
           ),
         );
       }
