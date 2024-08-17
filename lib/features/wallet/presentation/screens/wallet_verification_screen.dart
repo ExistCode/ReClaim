@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../providers/wallet_providers.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 
 class WalletVerificationScreen extends StatefulWidget {
+  
   static const routeName = '/wallet-verification-screen';
+  late AppUser user;
 
+  WalletVerificationScreen({required this.user});
   @override
   State<WalletVerificationScreen> createState() =>
       _WalletVerificationScreenState();
 }
 
 class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
+  
   final TextEditingController _walletIdController = TextEditingController();
   String _verificationMessage = '';
   final _verificationLogic = WalletProvider();
@@ -80,7 +85,7 @@ class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => {
-                Navigator.pushNamed(context, MainCameraScreen.routeName)
+                
               },
               child: Text('Move to dashboard'),
             ),
