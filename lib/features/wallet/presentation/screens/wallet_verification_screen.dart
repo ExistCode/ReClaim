@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
+import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../providers/wallet_providers.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 
@@ -74,6 +76,13 @@ class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => {
+                Navigator.pushNamed(context, MainCameraScreen.routeName)
+              },
+              child: Text('Move to dashboard'),
             ),
           ],
         ),
