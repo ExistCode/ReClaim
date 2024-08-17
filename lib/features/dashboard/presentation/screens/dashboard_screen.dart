@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/models/transaction_model.dart';
-import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+import 'package:reclaim/features/barcode-scan/data/models/transaction_model.dart';
+import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
+
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
