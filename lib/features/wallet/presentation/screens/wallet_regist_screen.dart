@@ -1,12 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/models/app_user.dart';
+
 class WalletCreationPage extends StatefulWidget {
+  late AppUser user;
+
+  WalletCreationPage({required this.user});
+
   @override
   _WalletCreationPageState createState() => _WalletCreationPageState();
 }
@@ -20,7 +28,6 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   String _walletName = '';
   String? _walletAddress;
 
-  
   Future<void> _createWallet() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -73,6 +80,13 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             msg: 'User created successfully!\nWallet address: $walletAddress',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => Navigation(
+                user: widget.user,
+              ),
+            ),
           );
         } else {
           throw DioException(
