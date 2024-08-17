@@ -45,14 +45,15 @@ class MyApp extends StatelessWidget {
         home: LogInScreen(),
         routes: {
           MainCameraScreen.routeName: (context) => const MainCameraScreen(),
-          ScanSuccessfulScreen.routeName: (context) => const ScanSuccessfulScreen(),
-          // DashboardScreen.routeName: (context) => 
-        //   DashboardScreen(
-        //     user: AppUser(
-        //       uid: FirebaseAuth.instance.currentUser!.uid,
-        //       email: FirebaseAuth.instance.currentUser!.email,
-        // ),),
-        //   LogInScreen.routeName: (context) => const LogInScreen(),
+          ScanSuccessfulScreen.routeName: (context) =>
+              const ScanSuccessfulScreen(),
+          // DashboardScreen.routeName: (context) =>
+          //   DashboardScreen(
+          //     user: AppUser(
+          //       uid: FirebaseAuth.instance.currentUser!.uid,
+          //       email: FirebaseAuth.instance.currentUser!.email,
+          // ),),
+          //   LogInScreen.routeName: (context) => const LogInScreen(),
           // SignUpScreen.routeName: (context) => const SignUpScreen(),
         },
       ),
