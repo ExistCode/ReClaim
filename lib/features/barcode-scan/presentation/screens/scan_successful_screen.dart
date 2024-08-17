@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
 import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
 
@@ -194,7 +195,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushNamed(DashboardScreen.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: custom_colors.accentGreen,
