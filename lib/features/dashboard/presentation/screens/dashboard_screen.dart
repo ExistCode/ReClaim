@@ -125,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '$lifetimeEarnings APT',
+                            '5.343 RCLM',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 26,

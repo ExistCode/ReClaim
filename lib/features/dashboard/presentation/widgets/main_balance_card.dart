@@ -4,7 +4,7 @@ import '../../../../core/theme/colors.dart' as custom_colors;
 class MainBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double currentBal = 8.2334765; //Change
+    double currentBal = 8.23347; //Change
     String walletAddress =
         "0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72";
 
@@ -24,12 +24,12 @@ class MainBalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Your Aptos Wallet',
+            'Your Wallet',
             style:
                 TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
           ),
           Text(
-            '${currentBal.toString()} APT',
+            '${currentBal.toString()} RCLM',
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.w600, fontSize: 32),
           ),
