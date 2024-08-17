@@ -2,6 +2,10 @@
 
 **ReClaim** is a decentralized application (dApp) that incentivizes users to recycle bottles, glass, and other recyclable materials. By utilizing IoT machines with computer vision and image recognition, ReClaim categorizes recyclables and rewards users with digital tokens. These rewards can be cashed out or donated to support environmental projects. The platform is built on the Aptos blockchain, ensuring transparency and security.
 
+## Block Explorer
+https://explorer-testnet.maschain.com/
+- Token Transfer Transaction ID/Hash: 0xcd75ee6fad5c967da8423b92cfc03da98b6a574b641730231146e30467f32fe9
+
 ## Features
 
 - **IoT Integration**: ReClaim connects with IoT machines equipped with computer vision to accurately identify and categorize recyclable materials.
@@ -48,3 +52,5 @@ The app leverages the performance of the Aptos blockchain to provide a seamless 
 ## Business Plan
 
 ReClaim has the potential to evolve into a scalable business by partnering with local governments, recycling centers, and environmental organizations. The platform can generate revenue through collaborations, sponsorships, and the potential sale of carbon credits. Additionally, ReClaim could explore expanding its services to include other types of recyclables and waste management solutions.
+
+
