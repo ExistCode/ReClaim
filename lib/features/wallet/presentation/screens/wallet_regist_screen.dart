@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 
 import '../../../../core/models/app_user.dart';
 
@@ -133,59 +134,110 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Maschain Demo'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Name'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your name' : null,
-                onSaved: (value) => _name = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your email' : null,
-                onSaved: (value) => _email = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'IC'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your IC' : null,
-                onSaved: (value) => _ic = value!,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Wallet Name'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter a wallet name' : null,
-                onSaved: (value) => _walletName = value!,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _walletAddress == null ? _createWallet : null,
-                child: Text(_walletAddress == null
-                    ? 'Create Wallet'
-                    : 'Wallet Created'),
-              ),
-              if (_walletAddress != null)
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text(
-                    'Wallet Address: ${_walletAddress!.substring(0, 6)}...${_walletAddress!.substring(_walletAddress!.length - 4)}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+      backgroundColor: custom_colors.primaryBackground,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(padding: EdgeInsets.all(20)),
+                Text(
+                  'Enter Your Details',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-            ],
+                SizedBox(height: 24),
+                _buildTextField('Name', (value) => _name = value!),
+                SizedBox(height: 20),
+                _buildTextField('Email', (value) => _email = value!),
+                SizedBox(height: 20),
+                _buildTextField('IC', (value) => _ic = value!),
+                SizedBox(height: 20),
+                _buildTextField('Wallet Name', (value) => _walletName = value!),
+                SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: _walletAddress == null ? _createWallet : null,
+                  child: Text(
+                    _walletAddress == null ? 'Create Wallet' : 'Wallet Created',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                if (_walletAddress != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 24),
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: custom_colors.darkGray,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Wallet Created Successfully!',
+                            style: TextStyle(
+                              color: custom_colors.accentGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Wallet Address:',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            '${_walletAddress!.substring(0, 6)}...${_walletAddress!.substring(_walletAddress!.length - 4)}',
+                            style: TextStyle(
+                              color: custom_colors.accentGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTextField(String label, Function(String?) onSaved) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: custom_colors.accentGreen),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: custom_colors.darkGray),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: custom_colors.accentGreen),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        filled: true,
+        fillColor: custom_colors.darkGray,
+      ),
+      style: TextStyle(color: Colors.white),
+      validator: (value) => value!.isEmpty ? 'Please enter your $label' : null,
+      onSaved: onSaved,
     );
   }
 }

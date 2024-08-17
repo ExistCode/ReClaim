@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 import 'package:reclaim/features/wallet/presentation/screens/wallet_regist_screen.dart';
 // Import your screen files
 
 class WalletAuthScreen extends StatefulWidget {
   static const routeName = '/wallet-auth-screen';
-  const WalletAuthScreen({super.key});
+  late AppUser user;
+  WalletAuthScreen({super.key, required this.user});
 
   @override
   State<WalletAuthScreen> createState() => _WalletAuthScreenState();
@@ -20,7 +23,8 @@ class _WalletAuthScreenState extends State<WalletAuthScreen> {
 
   void _navigateToCreateWallet() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => WalletCreationPage()),
+      MaterialPageRoute(
+          builder: (context) => WalletCreationPage(user: widget.user)),
     );
   }
 
