@@ -65,6 +65,13 @@ flutter:
   assets:
     - assets/images/card_background.png
     - assets/images/app_logo.png
+    - assets/images/Recycling-bins-side.png
+    - assets/images/items-recycling-centre.png
+    - assets/images/environmental-education.png
+    - assets/images/24EPBS_ENVIRONMENT.png
+    - assets/images/why-is-recycling-important-1587135431361.png
+    - assets/images/GettyImages-1353301481-scaled.png
+    - assets/images/ADAS-25-1-2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
