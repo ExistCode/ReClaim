@@ -8,13 +8,13 @@ ItemCount parseMessage(String message) {
   int plastic = int.parse(parts[0]);
   int can = int.parse(parts[1]);
   int carton = int.parse(parts[2]);
-  int miscItems = int.parse(parts[3]);
+  
 
   // Return an instance of ItemCount
   return ItemCount(
     plastic: plastic,
     can: can,
     carton: carton,
-    miscItems: miscItems,
+    
   );
 }

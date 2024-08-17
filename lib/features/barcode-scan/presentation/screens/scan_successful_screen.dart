@@ -20,7 +20,6 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
   static const plasticRate = 10;
   static const canRate = 5;
   static const cartonRate = 3;
-  static const miscRate = 0;
   
 
   @override
@@ -41,31 +40,28 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
     final transactionProvider =
         Provider.of<TransactionProvider>(context, listen: false);
     final transactionId = codeResult['transactionId'];
-    
+
     final qrCodeResult = codeResult['qrCodeValue'];
-    
-    
+
     String validJsonString = qrCodeResult?.replaceAll("'", '"') ?? "{}";
-    
+
     // Parse the codeResult as JSON
     Map<String, dynamic> resultMap = jsonDecode(validJsonString);
-    
+
     final qrCodeId = resultMap['id'];
 
     ItemCount itemCount = parseMessage(resultMap['message']);
-    
+
     // Parsing the num of items into variable
     int numOfPlastics = itemCount.plastic;
     int numOfCans = itemCount.can;
     int numOfCartons = itemCount.carton;
-    int numOfMiscItems = itemCount.miscItems;
     double totalTokens = numOfPlastics.toDouble() * plasticRate +
         numOfCans.toDouble() * canRate +
-        numOfCartons.toDouble() * cartonRate +
-        numOfMiscItems.toDouble() * miscRate;
+        numOfCartons.toDouble() * cartonRate;
 
     transactionProvider.updateTransaction(transactionId, qrCodeId,
-        numOfPlastics, numOfCans, numOfCartons, numOfMiscItems, totalTokens);
+        numOfPlastics, numOfCans, numOfCartons, totalTokens);
 
     return Scaffold(
       body: SafeArea(
@@ -160,15 +156,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        "$numOfMiscItems",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      
                     ],
                   ),
                   SizedBox(width: 10),
@@ -176,7 +164,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "plastic bottles",
+                        "Plastic bottles",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -184,7 +172,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "can bottles",
+                        "Cans ",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -198,14 +186,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        "misc items",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
+                      
                     ],
                   ),
                 ],
