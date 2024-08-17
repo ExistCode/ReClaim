@@ -100,7 +100,7 @@ class TransactionProvider with ChangeNotifier {
         );
 
         loadedTransactionList.add(loadedTransaction);
-        print('Fetched transaction: ${loadedTransaction.transactionId}');
+        print('Fetched transaction: ${loadedTransaction.transactionId}\n');
       } else {
         print('No transaction found for ID: $transactionId');
       }
