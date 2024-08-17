@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/models/transaction_model.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
@@ -25,6 +28,32 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
 
+  TransactionProvider _transactionProvider = TransactionProvider();
+  @override
+  void initState() {
+    super.initState();
+    _fetchAllTransaction();
+  }
+
+  Future<void> _fetchAllTransaction() async {
+    await _transactionProvider.fetchTransactionId();
+    await _transactionProvider.fetchAllTransactions();
+    // Use the fetched transaction data in your page
+    _displayTransactionDetails();
+  }
+
+  void _displayTransactionDetails() {
+    // Access the fetched transaction data from _transactionProvider.loadedTransactionList
+    TransactionModel fetchedTransaction = _transactionProvider.loadedTransactionList.first;
+    if (_transactionProvider.loadedTransactionList.isEmpty) {
+    print("No transactions found.");
+    }else{
+    // Display the transaction details in your page
+    print("the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2]}");
+    return; // Exit the method early
+    }
+  }
+
   //Get BottomNavBar from GlobalKey to access onTap
   BottomNavigationBar get navigationBar {
     return NavigationState.globalKey.currentWidget as BottomNavigationBar;
@@ -37,9 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     AppUser user = widget.user; 
     print("In dashboard screen: ${user.email}"); 
 
-    // if (TransactionProvider.isLoading == true && timerHasStrarted == false) {
-    //   startLoading();
-    // }
+    
+
 
     return Container(
       color: custom_colors.primaryBackground,
