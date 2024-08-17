@@ -22,6 +22,40 @@ class _LogInScreenState extends State<LogInScreen> {
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
+  // Stream to listen for authentication state changes
+  late StreamSubscription<User?> _authStateChangesSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen for authentication state changes
+    _authStateChangesSubscription = _auth.authStateChanges().listen((user) {
+      if (user != null) {
+        // User is signed in
+        AppUser appuser = AppUser(
+          uid: user.uid,
+          email: user.email,
+          // Add other necessary properties
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Navigation(user: appuser),
+          ),
+        );
+      } else {
+        // User is signed out
+        // Do nothing, stay on the login screen
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the subscription when the widget is disposed
+    _authStateChangesSubscription.cancel();
+    super.dispose();
+  }
+
   Future<UserCredential?> _signIn() async {
     try {
 
