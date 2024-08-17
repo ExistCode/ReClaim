@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainCameraScreen extends StatefulWidget {
@@ -19,8 +21,7 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
   @override
   void initState() {
     super.initState();
-    // Optionally, you can start the camera here
-    cameraController.start();
+    cameraController.start(); // Optionally, you can start the camera here
   }
 
   @override
@@ -31,6 +32,10 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -82,9 +87,34 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                           setState(() {
                             isScanning = false; // Stop scanning
                           });
-                          Navigator.of(context).pushNamed(
-                              '/scan-successful-screen',
-                              arguments: barcode.rawValue);
+
+                          // Create a new transaction and get the transaction ID
+                          String qrCodeId = barcode
+                              .rawValue!; // Use barcode value as qrCodeId
+                          transactionProvider
+                              .createNewTransaction(
+                            "",
+                            currentUser!.uid,
+                            0, // numOfPlastic
+                            0, // numOfCan
+                            0, // numOfCartons
+                            0, // numOfMiscItems
+                            0.0, // pointsRedeemed
+                          )
+                              .then((transactionId) {
+                            print("transactionid: " + transactionId);
+                            // Navigate to the scan success screen and pass the transactionId
+                            // Navigator.of(context).pushNamed(
+                            //   '/scan-successful-screen',
+                            //   arguments: {
+                            //     'transactionId': transactionId,
+                            //     'qrCodeValue': barcode.rawValue,
+                            //   },
+                            // );
+                          }).catchError((error) {
+                            print('Error creating transaction: $error');
+                          });
+
                           break; // Exit the loop after the first successful scan
                         }
                       }
