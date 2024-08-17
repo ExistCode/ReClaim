@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
-import 'package:reclaim/features/authentication/presentation/screens/wallet_auth_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import '../widgets/custom_error_dialog.dart';

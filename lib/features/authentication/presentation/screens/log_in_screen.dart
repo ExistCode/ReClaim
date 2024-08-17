@@ -4,7 +4,9 @@ import "package:email_validator/email_validator.dart";
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:reclaim/features/authentication/presentation/screens/sign_up_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_regist_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import '../widgets/custom_error_dialog.dart';
 import 'dart:async';
@@ -39,7 +41,7 @@ class _LogInScreenState extends State<LogInScreen> {
         );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => Navigation(user: appuser),
+            builder: (context) => WalletAuthScreen(user: appuser),
           ),
         );
       } else {
@@ -83,7 +85,7 @@ class _LogInScreenState extends State<LogInScreen> {
         print("before navigate: ${firebaseUser.email}");
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => Navigation(user: user),
+            builder: (context) => WalletCreationPage(user: user),
           ),
         );
       }
