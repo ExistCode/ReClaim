@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double remainingBudget = 5000; //Change
-    DateTime todayDate = DateTime.now();
-    int lastDateOfTheMonth =
-        DateTime(todayDate.year, todayDate.month + 1, 0).day;
-    String formattedFinalDate =
-        '$lastDateOfTheMonth/${todayDate.month}/${todayDate.year}';
+    double currentBal = 8.2334765; //Change
+    String walletAddress =
+        "0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72";
 
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       height: 200,
       width: double.infinity,
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image: const DecorationImage(
             image: AssetImage('assets/images/card_background.png'),
             fit: BoxFit.cover,
           ),
@@ -28,19 +24,19 @@ class MainBalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Current balance',
+            'Your Aptos Wallet',
             style:
                 TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
           ),
           Text(
-            'RM${remainingBudget.toString()}',
+            '${currentBal.toString()} APT',
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 30),
+                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 32),
           ),
           Text(
-            'until $formattedFinalDate',
+            'Address: ${walletAddress}',
             style:
-                TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
+                TextStyle(color: Colors.white.withOpacity(0.2), fontSize: 10),
           ),
         ],
       ),

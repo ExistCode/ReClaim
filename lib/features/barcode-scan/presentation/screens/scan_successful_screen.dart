@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
+import 'dart:convert';
 
 class ScanSuccessfulScreen extends StatefulWidget {
   static const routeName = '/scan-successful-screen';
+
   const ScanSuccessfulScreen({super.key});
 
   @override
@@ -11,6 +17,10 @@ class ScanSuccessfulScreen extends StatefulWidget {
 
 class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
   bool _isVisible = false; // Control the visibility of the checkmark
+  static const plasticRate = 10;
+  static const canRate = 5;
+  static const cartonRate = 3;
+  
 
   @override
   void initState() {
@@ -25,11 +35,33 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String codeResult = ModalRoute.of(context)!.settings.arguments as String;
-    int plasticBottles = 10;
-    int canBottles = 5;
-    int miscItems = 3;
-    int totalTokens = plasticBottles * 10 + canBottles * 5 + miscItems * 3;
+    final codeResult =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+    final transactionId = codeResult['transactionId'];
+
+    final qrCodeResult = codeResult['qrCodeValue'];
+
+    String validJsonString = qrCodeResult?.replaceAll("'", '"') ?? "{}";
+
+    // Parse the codeResult as JSON
+    Map<String, dynamic> resultMap = jsonDecode(validJsonString);
+
+    final qrCodeId = resultMap['id'];
+
+    ItemCount itemCount = parseMessage(resultMap['message']);
+
+    // Parsing the num of items into variable
+    int numOfPlastics = itemCount.plastic;
+    int numOfCans = itemCount.can;
+    int numOfCartons = itemCount.carton;
+    double totalTokens = numOfPlastics.toDouble() * plasticRate +
+        numOfCans.toDouble() * canRate +
+        numOfCartons.toDouble() * cartonRate;
+
+    transactionProvider.updateTransaction(transactionId, qrCodeId,
+        numOfPlastics, numOfCans, numOfCartons, totalTokens);
 
     return Scaffold(
       body: SafeArea(
@@ -99,7 +131,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "$plasticBottles",
+                        "$numOfPlastics",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -108,7 +140,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "$canBottles",
+                        "$numOfCans",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -117,13 +149,14 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "$miscItems",
+                        "$numOfCartons",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      
                     ],
                   ),
                   SizedBox(width: 10),
@@ -131,7 +164,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "plastic bottles",
+                        "Plastic bottles",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -139,7 +172,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "can bottles",
+                        "Cans ",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -147,12 +180,13 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "misc items",
+                        "Cartons",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),
                       ),
+                      
                     ],
                   ),
                 ],

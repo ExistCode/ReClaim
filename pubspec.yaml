@@ -37,9 +37,17 @@ dependencies:
   provider: ^6.1.2
   draggable_bottom_sheet: ^1.0.2
   firebase_core: ^2.24.2
+  firebase_auth: ^4.3.0
+  email_validator: ^3.0.0
   mobile_scanner: ^5.1.1
   lottie: ^3.1.2
-
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
+  aptos: ^0.0.5
+  web3auth_flutter: ^5.0.3
+  cloud_firestore: ^4.8.4
+  
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +58,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app-logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,6 +85,10 @@ flutter:
     - assets/images/why-is-recycling-important-1587135431361.png
     - assets/images/GettyImages-1353301481-scaled.png
     - assets/images/ADAS-25-1-2.png
+    - assets/images/app-logo.png
+    - assets/images/logo-transparent.png
+    - assets/images/logo-splashscreen.png
+    - assets/images/aptos-logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
