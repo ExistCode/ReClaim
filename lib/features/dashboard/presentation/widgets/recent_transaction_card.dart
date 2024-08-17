@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/models/transaction_model.dart';
-import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:reclaim/features/barcode-scan/data/models/transaction_model.dart';
+import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
 
 import '../../../../core/theme/colors.dart' as custom_colors;
 

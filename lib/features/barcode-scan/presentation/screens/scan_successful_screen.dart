@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
-import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+import 'package:reclaim/features/barcode-scan/data/models/item_count.dart';
+import 'package:reclaim/features/barcode-scan/data/services/item_count_services.dart';
+import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
+
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
