@@ -1,5 +1,4 @@
 import 'package:aptos/aptos_client.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,16 +9,9 @@ import 'package:reclaim/features/barcode-scan/presentation/providers/transaction
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
-import 'package:reclaim/features/dashboard/presentation/screens/donating_screen.dart';
-import 'package:reclaim/features/dashboard/presentation/screens/donation_screen.dart';
 import 'package:reclaim/features/wallet/presentation/providers/wallet_providers.dart';
-import 'package:reclaim/features/wallet/presentation/screens/wallet_regist_screen.dart';
-import 'package:web3auth_flutter/input.dart';
-import 'package:reclaim/core/navigation/navigation.dart';
-import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_verification_screen.dart';
 import 'firebase_options.dart';
-import 'package:reclaim/features/authentication/presentation/screens/sign_up_screen.dart';
-import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
