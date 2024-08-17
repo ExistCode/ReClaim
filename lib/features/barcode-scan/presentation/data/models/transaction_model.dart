@@ -5,7 +5,7 @@ class TransactionModel {
   int numOfPlastic;
   int numOfCan;
   int numOfCartons;
-  int numOfMiscItems;
+  
   double pointsRedeemed;
   DateTime dateRedeemed;
 
@@ -16,7 +16,6 @@ class TransactionModel {
     required this.numOfPlastic,
     required this.numOfCan,
     required this.numOfCartons,
-    required this.numOfMiscItems,
     required this.pointsRedeemed,
     required this.dateRedeemed,
   });
