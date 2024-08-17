@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:ffi';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/barcode-scan/presentation/data/models/transaction_model.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
@@ -19,10 +15,7 @@ import '../widgets/recent_transaction_card.dart';
 class DashboardScreen extends StatefulWidget {
   static const routeName = '/dashboard-screen';
   final AppUser user;
-  
-
   DashboardScreen({required this.user});
-
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -141,8 +134,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 curve: Curves.easeIn,
                 expansionExtent: 0.5,
                 onDragging: (pos) {},
-                previewWidget: RecentTransactionsCard(),
-                expandedWidget: ExpandedRecentTransactionsCard(),
+                previewWidget: RecentTransactionsCard(user: user,),
+                expandedWidget: ExpandedRecentTransactionsCard(user: user,),
                 backgroundWidget: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(

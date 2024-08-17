@@ -47,6 +47,7 @@ dependencies:
   aptos: ^0.0.5
   web3auth_flutter: ^5.0.3
   cloud_firestore: ^4.8.4
+  intl: ^0.17.0
   
   
 dev_dependencies:
