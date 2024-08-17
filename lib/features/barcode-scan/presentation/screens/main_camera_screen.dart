@@ -21,8 +21,7 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
   @override
   void initState() {
     super.initState();
-    // Optionally, you can start the camera here
-    cameraController.start();
+    cameraController.start(); // Optionally, you can start the camera here
   }
 
   @override
@@ -88,10 +87,34 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                           setState(() {
                             isScanning = false; // Stop scanning
                           });
-                          transactionProvider.createNewTransaction("","",currentUser!.uid, 0,0,0,0,0.0,);
-                          Navigator.of(context).pushNamed(
-                              '/scan-successful-screen',
-                              arguments: barcode.rawValue);
+
+                          // Create a new transaction and get the transaction ID
+                          String qrCodeId = barcode
+                              .rawValue!; // Use barcode value as qrCodeId
+                          transactionProvider
+                              .createNewTransaction(
+                            "",
+                            currentUser!.uid,
+                            0, // numOfPlastic
+                            0, // numOfCan
+                            0, // numOfCartons
+                            0, // numOfMiscItems
+                            0.0, // pointsRedeemed
+                          )
+                              .then((transactionId) {
+                            print("transactionid: " + transactionId);
+                            // Navigate to the scan success screen and pass the transactionId
+                            // Navigator.of(context).pushNamed(
+                            //   '/scan-successful-screen',
+                            //   arguments: {
+                            //     'transactionId': transactionId,
+                            //     'qrCodeValue': barcode.rawValue,
+                            //   },
+                            // );
+                          }).catchError((error) {
+                            print('Error creating transaction: $error');
+                          });
+
                           break; // Exit the loop after the first successful scan
                         }
                       }

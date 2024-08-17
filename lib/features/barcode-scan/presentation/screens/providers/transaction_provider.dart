@@ -8,9 +8,7 @@ class TransactionProvider with ChangeNotifier {
   List<String> transactionIdList = [];
   List<TransactionModel> loadedTransactionList = [];
 
-  Future<void> createNewTransaction(
-    
-    String transactionId,
+  Future<String> createNewTransaction(
     String qrCodeId,
     String userId,
     int numOfPlastic,
@@ -20,8 +18,13 @@ class TransactionProvider with ChangeNotifier {
     double pointsRedeemed,
   ) async {
     try {
-      await _firebaseFirestore.collection('Transaction').doc().set({
-        "id": transactionId,
+      // Create a new document reference with an auto-generated ID
+      DocumentReference newTransactionRef =
+          _firebaseFirestore.collection('transaction').doc();
+
+      // Set the data for the new document
+      await newTransactionRef.set({
+        "id": newTransactionRef.id, // Use the auto-generated ID
         "qrCodeId": qrCodeId,
         "userId": userId,
         "numOfPlastic": numOfPlastic,
@@ -29,26 +32,28 @@ class TransactionProvider with ChangeNotifier {
         "numOfCartons": numOfCartons,
         "numOfMiscItems": numOfMiscItems,
         "pointsRedeemed": pointsRedeemed,
-        "dateRedeemed": DateTime.now(), // Use the provided dateRedeemed
+        "dateRedeemed": DateTime.now(), // Use the current date
       });
-      print('Transaction created successfully: $transactionId');
+
+      print('Transaction created successfully: ${newTransactionRef.id}');
+      return newTransactionRef.id; // Return the generated ID
     } catch (error) {
       print('Failed to create transaction: $error');
       throw error; // Rethrow the error if needed
     }
   }
-
   Future<void> updateTransaction(String transactionId,
+  String qrCodeId,
       int numOfPlastic,
       int numOfCan,
       int numOfCartons,
       int numOfMiscItems,
       double pointsRedeemed) async{
     await FirebaseFirestore.instance
-        .collection('Transaction')
+        .collection('transacation')
         .doc(transactionId)
         .update({
-          "transactionId": transactionId,
+          "qrCodeId": qrCodeId,
       "numOfPlastic": numOfPlastic,
       "numOfCans": numOfCan,
       "numOfCartons": numOfCartons,
@@ -60,7 +65,7 @@ class TransactionProvider with ChangeNotifier {
   Future<void> fetchTransactionId() async {
     print('Fetching transaction IDs...');
     try {
-      final snapshot = await _firebaseFirestore.collection('Transaction').get();
+      final snapshot = await _firebaseFirestore.collection('transaction').get();
       transactionIdList = snapshot.docs.map((doc) => doc.reference.id).toList();
       print('Success! Fetched transaction ID List: $transactionIdList');
     } catch (error) {
@@ -78,7 +83,7 @@ class TransactionProvider with ChangeNotifier {
   Future<void> fetchTransactionFromID(String transactionId) async {
     try {
       final snapshot = await _firebaseFirestore
-          .collection('Transaction')
+          .collection('transaction')
           .doc(transactionId)
           .get();
 
