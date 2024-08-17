@@ -109,11 +109,11 @@ class _DonatingScreenState extends State<DonatingScreen> {
                       height: 20,
                     ),
                     DonationAmountOption(
-                      amount: "RM10",
-                      isSelected: selectedAmount == "RM10",
+                      amount: "1 RCLM",
+                      isSelected: selectedAmount == "1 RCLM",
                       onTap: () {
                         setState(() {
-                          selectedAmount = "RM10";
+                          selectedAmount = "1 RCLM";
                         });
                       },
                     ),
@@ -121,11 +121,11 @@ class _DonatingScreenState extends State<DonatingScreen> {
                       height: 15,
                     ),
                     DonationAmountOption(
-                      amount: "RM50",
-                      isSelected: selectedAmount == "RM50",
+                      amount: "5 RCLM",
+                      isSelected: selectedAmount == "5 RCLM",
                       onTap: () {
                         setState(() {
-                          selectedAmount = "RM50";
+                          selectedAmount = "5 RCLM";
                         });
                       },
                     ),
@@ -133,11 +133,11 @@ class _DonatingScreenState extends State<DonatingScreen> {
                       height: 15,
                     ),
                     DonationAmountOption(
-                      amount: "RM100",
-                      isSelected: selectedAmount == "RM100",
+                      amount: "10 RCLM",
+                      isSelected: selectedAmount == "10 RCLM",
                       onTap: () {
                         setState(() {
-                          selectedAmount = "RM100";
+                          selectedAmount = "10 RCLM";
                         });
                       },
                     ),
@@ -145,11 +145,11 @@ class _DonatingScreenState extends State<DonatingScreen> {
                       height: 15,
                     ),
                     DonationAmountOption(
-                      amount: "RM200",
-                      isSelected: selectedAmount == "RM200",
+                      amount: "20 RCLM",
+                      isSelected: selectedAmount == "20 RCLM",
                       onTap: () {
                         setState(() {
-                          selectedAmount = "RM200";
+                          selectedAmount = "20 RCLM";
                         });
                       },
                     ),
