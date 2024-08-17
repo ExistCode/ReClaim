@@ -104,13 +104,13 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                               .then((transactionId) {
                             print("transactionid: " + transactionId);
                             // Navigate to the scan success screen and pass the transactionId
-                            // Navigator.of(context).pushNamed(
-                            //   '/scan-successful-screen',
-                            //   arguments: {
-                            //     'transactionId': transactionId,
-                            //     'qrCodeValue': barcode.rawValue,
-                            //   },
-                            // );
+                            Navigator.of(context).pushNamed(
+                              '/scan-successful-screen',
+                              arguments: {
+                                'transactionId': transactionId,
+                                'qrCodeValue': barcode.rawValue,
+                              },
+                            );
                           }).catchError((error) {
                             print('Error creating transaction: $error');
                           });

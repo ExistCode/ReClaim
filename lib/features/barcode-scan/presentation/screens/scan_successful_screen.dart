@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
 import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
 
 class ScanSuccessfulScreen extends StatefulWidget {
   static const routeName = '/scan-successful-screen';
+
   const ScanSuccessfulScreen({super.key});
 
   @override
@@ -14,6 +17,11 @@ class ScanSuccessfulScreen extends StatefulWidget {
 
 class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
   bool _isVisible = false; // Control the visibility of the checkmark
+  static const plasticRate = 10;
+  static const canRate = 5;
+  static const cartonRate = 3;
+  static const miscRate = 0;
+  
 
   @override
   void initState() {
@@ -28,19 +36,36 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String codeResult = ModalRoute.of(context)!.settings.arguments as String;
-    print("CodeResults: " + codeResult);
-    // Replace single quotes with double quotes for valid JSON format
-    String validJsonString = codeResult.replaceAll("'", '"');
+    final codeResult =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
+    final transactionId = codeResult['transactionId'];
+    
+    final qrCodeResult = codeResult['qrCodeValue'];
+    
+    
+    String validJsonString = qrCodeResult?.replaceAll("'", '"') ?? "{}";
+    
     // Parse the codeResult as JSON
     Map<String, dynamic> resultMap = jsonDecode(validJsonString);
+    
+    final qrCodeId = resultMap['id'];
+
     ItemCount itemCount = parseMessage(resultMap['message']);
-    int plasticBottles = itemCount.plastic;
-    int canBottles = itemCount.can;
-    int carton = itemCount.carton;
-    int miscItems = itemCount.miscItems;
-    int totalTokens =
-        plasticBottles * 10 + canBottles * 5 + carton * 3 + miscItems * 0;
+    
+    // Parsing the num of items into variable
+    int numOfPlastics = itemCount.plastic;
+    int numOfCans = itemCount.can;
+    int numOfCartons = itemCount.carton;
+    int numOfMiscItems = itemCount.miscItems;
+    double totalTokens = numOfPlastics.toDouble() * plasticRate +
+        numOfCans.toDouble() * canRate +
+        numOfCartons.toDouble() * cartonRate +
+        numOfMiscItems.toDouble() * miscRate;
+
+    transactionProvider.updateTransaction(transactionId, qrCodeId,
+        numOfPlastics, numOfCans, numOfCartons, numOfMiscItems, totalTokens);
 
     return Scaffold(
       body: SafeArea(
@@ -110,7 +135,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "$plasticBottles",
+                        "$numOfPlastics",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -119,7 +144,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "$canBottles",
+                        "$numOfCans",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -128,7 +153,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "$carton",
+                        "$numOfCartons",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -137,7 +162,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "$miscItems",
+                        "$numOfMiscItems",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

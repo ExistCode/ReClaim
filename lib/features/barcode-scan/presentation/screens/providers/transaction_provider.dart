@@ -42,15 +42,17 @@ class TransactionProvider with ChangeNotifier {
       throw error; // Rethrow the error if needed
     }
   }
-  Future<void> updateTransaction(String transactionId,
-  String qrCodeId,
-      int numOfPlastic,
-      int numOfCan,
-      int numOfCartons,
-      int numOfMiscItems,
-      double pointsRedeemed) async{
+  Future<void> updateTransaction(
+    String transactionId,
+    String qrCodeId,
+    int numOfPlastic,
+    int numOfCan,
+    int numOfCartons,
+    int numOfMiscItems,
+    double pointsRedeemed
+    ) async{
     await FirebaseFirestore.instance
-        .collection('transacation')
+        .collection('transaction')
         .doc(transactionId)
         .update({
           "qrCodeId": qrCodeId,
@@ -59,7 +61,7 @@ class TransactionProvider with ChangeNotifier {
       "numOfCartons": numOfCartons,
       "numOfMiscItems": numOfMiscItems,
       "pointsRedeemed": pointsRedeemed, });
-    print('Added notes');
+    print('Added Transaction');
   }
 
   Future<void> fetchTransactionId() async {
