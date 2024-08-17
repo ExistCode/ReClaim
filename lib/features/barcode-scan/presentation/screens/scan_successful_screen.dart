@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/models/item_count.dart';
-import 'package:reclaim/features/barcode-scan/presentation/data/services/item_count_services.dart';
-import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+import 'package:reclaim/features/barcode-scan/data/models/item_count.dart';
+import 'package:reclaim/features/barcode-scan/data/services/item_count_services.dart';
+import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
+
+import '../../../wallet/presentation/providers/wallet_providers.dart';
+import '../providers/transaction_successful_provider.dart';
 
 class ScanSuccessfulScreen extends StatefulWidget {
   static const routeName = '/scan-successful-screen';
@@ -17,19 +21,17 @@ class ScanSuccessfulScreen extends StatefulWidget {
 }
 
 class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
-  bool _isVisible = false; // Control the visibility of the checkmark
-  static const plasticRate = 10;
+  bool _isVisible = false;
+  static const plasticRate = 3;
   static const canRate = 5;
-  static const cartonRate = 3;
-  
+  static const cartonRate = 1;
 
   @override
   void initState() {
     super.initState();
-    // Delay to show the checkmark animation
     Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
-        _isVisible = true; // Make the checkmark visible
+        _isVisible = true;
       });
     });
   }
@@ -40,20 +42,17 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final transactionProvider =
         Provider.of<TransactionProvider>(context, listen: false);
+    final transactionSuccessfulProvider =
+        Provider.of<TransactionSuccessfulProvider>(context, listen: false);
+    final walletProvider = Provider.of<WalletProvider>(context, listen: false);
+
     final transactionId = codeResult['transactionId'];
-
     final qrCodeResult = codeResult['qrCodeValue'];
-
     String validJsonString = qrCodeResult?.replaceAll("'", '"') ?? "{}";
-
-    // Parse the codeResult as JSON
     Map<String, dynamic> resultMap = jsonDecode(validJsonString);
-
     final qrCodeId = resultMap['id'];
-
     ItemCount itemCount = parseMessage(resultMap['message']);
 
-    // Parsing the num of items into variable
     int numOfPlastics = itemCount.plastic;
     int numOfCans = itemCount.can;
     int numOfCartons = itemCount.carton;
@@ -61,8 +60,24 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
         numOfCans.toDouble() * canRate +
         numOfCartons.toDouble() * cartonRate;
 
-    transactionProvider.updateTransaction(transactionId, qrCodeId,
-        numOfPlastics, numOfCans, numOfCartons, totalTokens);
+    // Update transaction and initiate token transfer
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      transactionProvider.updateTransaction(transactionId, qrCodeId,
+          numOfPlastics, numOfCans, numOfCartons, totalTokens);
+
+      // Initiate token transfer
+      String userWalletAddress = walletProvider.walletAddress ?? '';
+      if (userWalletAddress.isNotEmpty) {
+        transactionSuccessfulProvider.transferTokens(
+          toAddress: userWalletAddress,
+          amount: totalTokens.toString(),
+          contractAddress: dotenv.env['ORGANIZATION_WALLET_ADDRESS'] ?? '',
+          callbackUrl: 'https://your-callback-url.com/callback',
+        );
+      } else {
+        print('Error: User wallet address is empty');
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -157,7 +172,6 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      
                     ],
                   ),
                   SizedBox(width: 10),
@@ -187,7 +201,6 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      
                     ],
                   ),
                 ],

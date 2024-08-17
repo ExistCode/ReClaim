@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/transaction_model.dart';
 
-
 class TransactionProvider with ChangeNotifier {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<String> transactionIdList = [];
@@ -14,7 +13,6 @@ class TransactionProvider with ChangeNotifier {
     int numOfPlastic,
     int numOfCan,
     int numOfCartons,
-    
     double pointsRedeemed,
   ) async {
     try {
@@ -41,23 +39,24 @@ class TransactionProvider with ChangeNotifier {
       throw error; // Rethrow the error if needed
     }
   }
+
   Future<void> updateTransaction(
-    String transactionId,
-    String qrCodeId,
-    int numOfPlastic,
-    int numOfCan,
-    int numOfCartons,
-    double pointsRedeemed
-    ) async{
+      String transactionId,
+      String qrCodeId,
+      int numOfPlastic,
+      int numOfCan,
+      int numOfCartons,
+      double pointsRedeemed) async {
     await FirebaseFirestore.instance
         .collection('transaction')
         .doc(transactionId)
         .update({
-          "qrCodeId": qrCodeId,
+      "qrCodeId": qrCodeId,
       "numOfPlastic": numOfPlastic,
       "numOfCans": numOfCan,
       "numOfCartons": numOfCartons,
-      "pointsRedeemed": pointsRedeemed, });
+      "pointsRedeemed": pointsRedeemed,
+    });
     print('Added Transaction');
   }
 
@@ -109,4 +108,3 @@ class TransactionProvider with ChangeNotifier {
     }
   }
 }
-

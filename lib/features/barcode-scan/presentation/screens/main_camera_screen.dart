@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
-import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
+import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainCameraScreen extends StatefulWidget {
