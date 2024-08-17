@@ -98,7 +98,6 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                             0, // numOfPlastic
                             0, // numOfCan
                             0, // numOfCartons
-                            0, // numOfMiscItems
                             0.0, // pointsRedeemed
                           )
                               .then((transactionId) {

@@ -14,7 +14,7 @@ class TransactionProvider with ChangeNotifier {
     int numOfPlastic,
     int numOfCan,
     int numOfCartons,
-    int numOfMiscItems,
+    
     double pointsRedeemed,
   ) async {
     try {
@@ -30,7 +30,6 @@ class TransactionProvider with ChangeNotifier {
         "numOfPlastic": numOfPlastic,
         "numOfCans": numOfCan,
         "numOfCartons": numOfCartons,
-        "numOfMiscItems": numOfMiscItems,
         "pointsRedeemed": pointsRedeemed,
         "dateRedeemed": DateTime.now(), // Use the current date
       });
@@ -48,7 +47,6 @@ class TransactionProvider with ChangeNotifier {
     int numOfPlastic,
     int numOfCan,
     int numOfCartons,
-    int numOfMiscItems,
     double pointsRedeemed
     ) async{
     await FirebaseFirestore.instance
@@ -59,7 +57,6 @@ class TransactionProvider with ChangeNotifier {
       "numOfPlastic": numOfPlastic,
       "numOfCans": numOfCan,
       "numOfCartons": numOfCartons,
-      "numOfMiscItems": numOfMiscItems,
       "pointsRedeemed": pointsRedeemed, });
     print('Added Transaction');
   }
@@ -97,7 +94,6 @@ class TransactionProvider with ChangeNotifier {
           numOfPlastic: snapshot.data()!['numOfPlastic'],
           numOfCan: snapshot.data()!['numOfCans'],
           numOfCartons: snapshot.data()!['numOfCartons'],
-          numOfMiscItems: snapshot.data()!['numOfMiscItems'],
           pointsRedeemed: snapshot.data()!['pointsRedeemed'],
           dateRedeemed: (snapshot.data()!['dateRedeemed'] as Timestamp)
               .toDate(), // Convert Timestamp to DateTime
