@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -18,12 +17,8 @@ class RecentTransactionsCard extends StatefulWidget {
 }
 
 class _RecentTransactionsCardState extends State<RecentTransactionsCard> {
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40), topRight: Radius.circular(40)),
@@ -71,15 +66,16 @@ class ExpandedRecentTransactionsCard extends StatefulWidget {
   ExpandedRecentTransactionsCard({required this.user});
 
   @override
-  State<ExpandedRecentTransactionsCard> createState() => _ExpandedRecentTransactionsCardState();
+  State<ExpandedRecentTransactionsCard> createState() =>
+      _ExpandedRecentTransactionsCardState();
 }
 
-class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransactionsCard> {
-
+class _ExpandedRecentTransactionsCardState
+    extends State<ExpandedRecentTransactionsCard> {
   TransactionProvider _transactionProvider = TransactionProvider();
   List<TransactionModel> _transactionList = [];
   int _uniqueDateCount = 0;
-  
+
   @override
   void initState() {
     super.initState();
@@ -97,14 +93,14 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
   void _displayTransactionDetails() {
     // Access the fetched transaction data from _transactionProvider.loadedTransactionList
     if (_transactionProvider.loadedTransactionList.isEmpty) {
-    print("No transactions found.");
-    }else{
-    // Display the transaction details in your page
-    print("the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
-    return; // Exit the method early
+      print("No transactions found.");
+    } else {
+      // Display the transaction details in your page
+      print(
+          "the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
+      return; // Exit the method early
     }
   }
-
 
   void _retrieveRecentTransactions() {
     List<TransactionModel> _tempTransactionList = [];
@@ -113,21 +109,26 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
 
     // Ensure there are at least 5 transactions to process
     if (txLastIndex < 4) {
-      print("Not enough transactions to process. current transaction count: ${txLastIndex+1}");
+      print(
+          "Not enough transactions to process. current transaction count: ${txLastIndex + 1}");
       return;
     }
 
     for (int i = txLastIndex; i > (txLastIndex - 5); i--) {
       try {
         if (_transactionProvider.loadedTransactionList[i] != null) {
-          _tempTransactionList.add(_transactionProvider.loadedTransactionList[i]);
+          _tempTransactionList
+              .add(_transactionProvider.loadedTransactionList[i]);
 
           // Ensure there is a previous transaction to compare with
           if (i > 0) {
-            String currentTransactionDate = DateFormat('dd MMM yy').format(_transactionProvider.loadedTransactionList[i].dateRedeemed);
-            String previousTransactionDate = DateFormat('dd MMM yy').format(_transactionProvider.loadedTransactionList[i - 1].dateRedeemed);
+            String currentTransactionDate = DateFormat('dd MMM yy').format(
+                _transactionProvider.loadedTransactionList[i].dateRedeemed);
+            String previousTransactionDate = DateFormat('dd MMM yy').format(
+                _transactionProvider.loadedTransactionList[i - 1].dateRedeemed);
 
-            print("Current transaction date: ${currentTransactionDate} " + "Previous transaction date: ${previousTransactionDate}");
+            print("Current transaction date: ${currentTransactionDate} " +
+                "Previous transaction date: ${previousTransactionDate}");
             if (i == txLastIndex) {
               tempUniqueDateCount++;
             } else {
@@ -137,14 +138,16 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
             }
           } else {
             // Handle the case where there is no previous transaction
-            String currentTransactionDate = DateFormat('dd MMM yy').format(_transactionProvider.loadedTransactionList[i].dateRedeemed);
+            String currentTransactionDate = DateFormat('dd MMM yy').format(
+                _transactionProvider.loadedTransactionList[i].dateRedeemed);
             print("Current transaction date: ${currentTransactionDate}");
             tempUniqueDateCount++;
           }
 
           print("Current unique date count: ${tempUniqueDateCount}");
           print("Current transaction count: ${i}");
-          print("Current temptransaction: ${_tempTransactionList[_tempTransactionList.length - 1].pointsRedeemed}");
+          print(
+              "Current temptransaction: ${_tempTransactionList[_tempTransactionList.length - 1].pointsRedeemed}");
         }
       } catch (e) {
         print("Error processing transaction at index $i: $e");
@@ -160,7 +163,7 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
   //   int txLastIndex = _transactionProvider.loadedTransactionList.length-1;
   //   int tempUniqueDateCount = 0;
 
-  //   for (int i = txLastIndex;  i > (txLastIndex-5); i--){  
+  //   for (int i = txLastIndex;  i > (txLastIndex-5); i--){
   //     try {
   //       if (_transactionProvider.loadedTransactionList[i] != null){
   //         _tempTransactionList.add(_transactionProvider.loadedTransactionList[i]);
@@ -193,8 +196,7 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
   // }
 
   @override
-  Widget build(BuildContext context) { 
-    
+  Widget build(BuildContext context) {
     // List<DateTime> distinctDateList =
     //     Provider.of<TransactionProvider>(context).distinctDateList;
 
@@ -275,8 +277,8 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      DateFormat('dd MMM')
-                                          .format(_transactionList[i].dateRedeemed),
+                                      DateFormat('dd MMM').format(
+                                          _transactionList[i].dateRedeemed),
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white.withOpacity(0.4)),
@@ -286,8 +288,9 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
                                         if (tx.dateRedeemed != null &&
                                             DateFormat('dd MMM')
                                                     .format(tx.dateRedeemed) ==
-                                                DateFormat('dd MMM')
-                                                    .format(_transactionList[i].dateRedeemed)) {
+                                                DateFormat('dd MMM').format(
+                                                    _transactionList[i]
+                                                        .dateRedeemed)) {
                                           return Container(
                                             height: 50,
                                             child: Row(
@@ -305,7 +308,8 @@ class _ExpandedRecentTransactionsCardState extends State<ExpandedRecentTransacti
                                                 Text(
                                                   "+ ${tx.pointsRedeemed.toString()} RCLM",
                                                   style: TextStyle(
-                                                      color: custom_colors.accentGreen,
+                                                      color: custom_colors
+                                                          .accentGreen,
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w600),
