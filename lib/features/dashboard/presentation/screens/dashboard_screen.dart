@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/features/barcode-scan/presentation/data/models/transaction_model.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/providers/transaction_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
@@ -15,6 +19,7 @@ import '../widgets/recent_transaction_card.dart';
 class DashboardScreen extends StatefulWidget {
   static const routeName = '/dashboard-screen';
   final AppUser user;
+  
 
   DashboardScreen({required this.user});
 
@@ -24,22 +29,76 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  TransactionProvider _transactionProvider = TransactionProvider();
+  double lifetimeEarnings = 0.00;
+  int lifetimeRecycledItems = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAllTransaction();
+  }
+
+  Future<void> _fetchAllTransaction() async {
+    await _transactionProvider.fetchTransactionId();
+    await _transactionProvider.fetchAllTransactions();
+    // calculated fields after fetching 
+    _calculateEarnings();
+    // Use the fetched transaction data in your page
+    _displayTransactionDetails();
+  }
+
+  void _displayTransactionDetails() {
+    // Access the fetched transaction data from _transactionProvider.loadedTransactionList
+    TransactionModel fetchedTransaction = _transactionProvider.loadedTransactionList.first;
+    if (_transactionProvider.loadedTransactionList.isEmpty) {
+    print("No transactions found.");
+    }else{
+    // Display the transaction details in your page
+    print("the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
+    return; // Exit the method early
+    }
+  }
+
+  void _calculateEarnings(){
+    AppUser user = widget.user; 
+    double templifetimeEarnings = 1.0 ;
+    int templifetimeRecycledItems = 0;
+
+    // for (int x = 0 ;(x < _transactionProvider.loadedTransactionList.length); x++){
+    for (var transaction in  _transactionProvider.loadedTransactionList){  
+        try {
+          if (transaction.userId == user.uid ){
+            templifetimeEarnings += transaction.pointsRedeemed;
+            templifetimeRecycledItems += transaction.numOfCan +transaction.numOfCartons +transaction.numOfPlastic;
+
+            print("Current earnings: ${templifetimeEarnings}");
+          }
+        } on Exception catch (e) {
+          print("Can't Calculate!! The error message is ${e}" );
+        }
+    }
+
+    // Call setState to update the UI after calculations
+    setState(() {
+      lifetimeEarnings = templifetimeEarnings;
+      lifetimeRecycledItems = templifetimeRecycledItems;
+    }); 
+
+    print("The total points earned: ${templifetimeEarnings}");
+    print("The total recycled items: ${templifetimeRecycledItems}");
+  }
 
   //Get BottomNavBar from GlobalKey to access onTap
   BottomNavigationBar get navigationBar {
     return NavigationState.globalKey.currentWidget as BottomNavigationBar;
   }
 
+
   @override
-  Widget build(BuildContext context) {
-    double lifetimeEarnings = 0.00;
-    int lifetimeRecycledItems = 33;
+  Widget build(BuildContext context){
     AppUser user = widget.user; 
     print("In dashboard screen: ${user.email}"); 
-
-    // if (TransactionProvider.isLoading == true && timerHasStrarted == false) {
-    //   startLoading();
-    // }
 
     return Container(
       color: custom_colors.primaryBackground,
