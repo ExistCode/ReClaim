@@ -1,17 +1,26 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/core/navigation/navigation.dart';
+import 'package:reclaim/core/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WalletCreationPage extends StatefulWidget {
+  static const routeName = '/wallet-creation';
+  late AppUser user;
+  WalletCreationPage({super.key, required this.user});
+
   @override
   _WalletCreationPageState createState() => _WalletCreationPageState();
 }
 
 class _WalletCreationPageState extends State<WalletCreationPage> {
+  UserProvider _userProvider = UserProvider();
   final Dio _dio = Dio();
   final _formKey = GlobalKey<FormState>();
   String _name = '';
@@ -20,8 +29,22 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   String _walletName = '';
   String? _walletAddress;
 
+   @override
+  void initState() {
+    super.initState();
+    _loadWalletAddress();
+    if (widget.user.walletAddress != null) {
+      // If the user already has a wallet address, navigate to the Dashboard
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => Navigation(user: widget.user),
+        ),
+      );
+    }
+  }
   
   Future<void> _createWallet() async {
+    AppUser tempUser = widget.user;
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
@@ -65,6 +88,26 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             _walletAddress = walletAddress;
           });
 
+          // Create AppUser object with collected details
+          final user = AppUser(
+            uid: tempUser.uid, // Generate or retrieve a unique ID
+            email: _email,
+            name: _name,
+            ic: _ic,
+            walletName: _walletName,
+            walletAddress: walletAddress,
+          );
+
+          // Save user details to Firestore
+          await _userProvider.createNewUser(
+            user.uid,
+            user.email.toString(),
+            user.name,
+            user.ic,
+            user.walletName,
+            user.walletAddress.toString(),
+          );
+
           // Store wallet address in SharedPreferences
           final prefs = await SharedPreferences.getInstance();
           await prefs.setString('walletAddress', walletAddress);
@@ -74,6 +117,15 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
           );
+
+          // Navigate to Dashboar Screen with the user object
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => Navigation(user: user),
+            ),
+          );
+          print("User created successfully: ${user.uid}");
+
         } else {
           throw DioException(
             requestOptions: response.requestOptions,
@@ -100,11 +152,7 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _loadWalletAddress();
-  }
+
 
   Future<void> _loadWalletAddress() async {
     final prefs = await SharedPreferences.getInstance();
@@ -113,6 +161,7 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
       setState(() {
         _walletAddress = storedWalletAddress;
       });
+
     }
   }
 
