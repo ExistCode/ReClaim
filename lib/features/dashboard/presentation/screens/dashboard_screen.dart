@@ -184,7 +184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '5.343 RCLM',
+                            '${lifetimeEarnings} RCLM',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 26,

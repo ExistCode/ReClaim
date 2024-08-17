@@ -4,7 +4,6 @@ import 'package:reclaim/core/navigation/accesss_camera_fab.dart';
 import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../widgets/custom_app_bar.dart';
 import '../theme/colors.dart' as custom_colors;
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 
