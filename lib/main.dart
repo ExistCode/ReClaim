@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ReClaim',
         theme: ThemeData(fontFamily: 'Inter'),
-        home: SignUpScreen(),
+        home: LogInScreen(),
         routes: {
           MainCameraScreen.routeName: (context) => const MainCameraScreen(),
           ScanSuccessfulScreen.routeName: (context) =>

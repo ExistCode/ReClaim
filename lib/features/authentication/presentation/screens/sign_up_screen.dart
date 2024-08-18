@@ -236,7 +236,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const Text('Already have an account?',
                             style: TextStyle(color: Colors.white)),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
