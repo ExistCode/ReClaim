@@ -55,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print("before navigate: ${firebaseUser.email}");
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => WalletAuthScreen(user: user,),
+            builder: (context) => WalletAuthScreen(user: user),
           ),
         );
       }
@@ -130,35 +130,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: Colors.white),
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _emailController,
                       decoration: const InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: custom_colors.accentGreen),
-                        ),
-                      ),
+                          labelStyle: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400),
+                          labelText: 'Email',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: custom_colors.accentGreen),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: custom_colors.accentGreen))),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _passwordController,
                       decoration: const InputDecoration(
-                        labelText: 'Password',
-                        border: OutlineInputBorder(),
-                      ),
+                          labelStyle: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400),
+                          labelText: 'Password',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: custom_colors.accentGreen),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: custom_colors.accentGreen))),
                       style: const TextStyle(color: Colors.white),
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _confirmPasswordController,
                       decoration: const InputDecoration(
-                        labelText: 'Confirm Password',
-                        border: OutlineInputBorder(),
-                      ),
+                          labelStyle: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w400),
+                          labelText: 'Confirm Password',
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: custom_colors.accentGreen)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: custom_colors.accentGreen))),
                       style: const TextStyle(color: Colors.white),
                       obscureText: true,
                     ),
