@@ -38,10 +38,12 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     final codeResult =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final transactionProvider =
         Provider.of<TransactionProvider>(context, listen: false);
+        
     final transactionSuccessfulProvider =
         Provider.of<TransactionSuccessfulProvider>(context, listen: false);
     final walletProvider = Provider.of<WalletProvider>(context, listen: false);
@@ -124,7 +126,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
               ),
               SizedBox(height: 5),
               Text(
-                "$totalTokens tokens 🚀",
+                "$totalTokens RCLM 🚀",
                 style: TextStyle(
                   color:
                       custom_colors.accentGreen, // Different color for tokens
@@ -208,10 +210,56 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                   ),
                 ],
               ),
+              SizedBox(height: 20),
+              Consumer<TransactionSuccessfulProvider>(
+                builder: (context, provider, child) {
+                  return provider.transactionHash != null
+                      ? Column(
+                          children: [
+                            Text(
+                              "Transaction Hash:",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              provider.transactionHash!,
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.3),
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 12,),
+                            Text(
+                              "Nonce:",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              provider.nonce.toString(),
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.3),
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        )
+                      : SizedBox.shrink();
+                },
+              ),
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(DashboardScreen.routeName);
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: custom_colors.accentGreen,
