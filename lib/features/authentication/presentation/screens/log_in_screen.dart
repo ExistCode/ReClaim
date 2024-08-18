@@ -62,7 +62,6 @@ class _LogInScreenState extends State<LogInScreen> {
 
   Future<UserCredential?> _signIn() async {
     try {
-
       if (!EmailValidator.validate(_emailController.text)) {
         showErrorDialog(context, 'Invalid email');
         return null;
@@ -71,14 +70,16 @@ class _LogInScreenState extends State<LogInScreen> {
       final userCredential = await _auth.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      ).timeout(const Duration(seconds: 6), onTimeout: () {
-        throw TimeoutException('The request has timed out');
-      });
+      );
+      // .timeout(const Duration(seconds: 6), onTimeout: () {
+      //   throw TimeoutException('The request has timed out');
+      // });
       print('User signed in');
 
       User? firebaseUser = userCredential.user;
       if (firebaseUser != null) {
-        AppUser user = await _userProvider.fetchUserById(firebaseUser.uid) as AppUser;
+        AppUser user =
+            await _userProvider.fetchUserById(firebaseUser.uid) as AppUser;
         _userProvider.setCurrentUser(user);
         // AppUser user = AppUser(
         //   uid: firebaseUser.uid,
@@ -88,7 +89,8 @@ class _LogInScreenState extends State<LogInScreen> {
         // );
         // Navigate to DashboardScreen with the user object
         print("before navigate email: ${_userProvider.getCurrentUserEmail()}");
-        print("before navigate address?: ${_userProvider.getCurrentUserWalletAddress()}");
+        print(
+            "before navigate address?: ${_userProvider.getCurrentUserWalletAddress()}");
 
         if (user.walletAddress != null) {
           Navigator.of(context).pushReplacement(
@@ -105,7 +107,6 @@ class _LogInScreenState extends State<LogInScreen> {
         }
       }
       return userCredential;
-
     } catch (e) {
       String errorMessage;
       if (e is TimeoutException) {
@@ -141,16 +142,23 @@ class _LogInScreenState extends State<LogInScreen> {
               const Text(
                 'Welcome to ReClaim',
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               const Text(
                 'Let\'s get started!',
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               const SizedBox(height: 80),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: custom_colors.darkGray,
@@ -160,24 +168,46 @@ class _LogInScreenState extends State<LogInScreen> {
                     const Text(
                       'Log In',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: custom_colors.accentGreen),
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: custom_colors.accentGreen),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: custom_colors.accentGreen),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        labelText: 'Email',
                       ),
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: custom_colors.accentGreen),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: custom_colors.accentGreen),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
@@ -198,13 +228,14 @@ class _LogInScreenState extends State<LogInScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account?', style: TextStyle(color: Colors.white)),
+                        const Text('Don\'t have an account?',
+                            style: TextStyle(color: Colors.white)),
                         TextButton(
                           onPressed: () {
                             Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => SignUpScreen())
-                            );   
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUpScreen()));
                           },
                           child: const Text('Sign Up'),
                         ),
