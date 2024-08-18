@@ -43,7 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      ).timeout(const Duration(seconds: 6), onTimeout: () {
+      )
+          .timeout(const Duration(seconds: 6), onTimeout: () {
         throw TimeoutException('The request has timed out');
       });
 
@@ -58,8 +59,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await _userProvider.createNewUser(
             user.uid, // Generate or retrieve a unique ID
             user.email ?? '', // Provide a default value if user.email is null
-            _nameController.text,'','','',''
-        );
+            _nameController.text,
+            '',
+            '',
+            '',
+            '');
         // Navigate to DashboardScreen with the user object
         print("before navigate: ${firebaseUser.email}");
         Navigator.of(context).pushReplacement(
@@ -142,12 +146,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       controller: _nameController,
                       decoration: const InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: custom_colors.accentGreen),
-                        ),
-                      ),
+                          labelText: 'Name',
+                          labelStyle: TextStyle(color: Colors.white),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: custom_colors.accentGreen),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: custom_colors.accentGreen))),
                       style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 20),

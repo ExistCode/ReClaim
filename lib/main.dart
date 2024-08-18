@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ReClaim',
         theme: ThemeData(fontFamily: 'Inter'),
-        home: LogInScreen(),
+        home: SignUpScreen(),
         routes: {
           MainCameraScreen.routeName: (context) => const MainCameraScreen(),
           ScanSuccessfulScreen.routeName: (context) =>
