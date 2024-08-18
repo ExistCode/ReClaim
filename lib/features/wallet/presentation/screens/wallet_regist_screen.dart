@@ -223,9 +223,9 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: custom_colors.accentGreen),
+        labelStyle: TextStyle(color: Colors.white),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: custom_colors.darkGray),
+          borderSide: BorderSide(color: custom_colors.accentGreen),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedBorder: OutlineInputBorder(
