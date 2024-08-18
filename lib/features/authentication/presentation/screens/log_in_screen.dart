@@ -134,7 +134,7 @@ class _LogInScreenState extends State<LogInScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
                 'assets/images/app-logo.png',
@@ -218,14 +218,25 @@ class _LogInScreenState extends State<LogInScreen> {
                       obscureText: true,
                     ),
                     const SizedBox(height: 40),
-                    ElevatedButton(
-                      onPressed: () async {
-                        final userCredential = await _signIn();
-                        if (userCredential != null) {
-                          // Handle successful login
-                        }
-                      },
-                      child: const Text('Log In'),
+                    SizedBox(
+                      height: 50,
+                      width: 130,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final userCredential = await _signIn();
+                          if (userCredential != null) {
+                            // Handle successful login
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: custom_colors.accentGreen,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))),
+                        child: const Text(
+                          'Log In',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -240,7 +251,10 @@ class _LogInScreenState extends State<LogInScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => SignUpScreen()));
                           },
-                          child: const Text('Sign Up'),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(color: custom_colors.accentGreen),
+                          ),
                         ),
                       ],
                     ),
