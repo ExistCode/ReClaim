@@ -16,15 +16,17 @@ class WalletAuthScreen extends StatefulWidget {
 }
 
 class _WalletAuthScreenState extends State<WalletAuthScreen> {
-  // void _navigateToExistingWallet() {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(builder: (context) => ExistingWalletScreen()),
-  //   );
-  // }
+  void _navigateToExistingWallet() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) => WalletVerificationScreen(user: widget.user)),
+    );
+  }
 
   void _navigateToCreateWallet() {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => WalletCreationPage(user: widget.user)),
+      MaterialPageRoute(
+          builder: (context) => WalletCreationPage(user: widget.user)),
     );
   }
 
@@ -61,11 +63,7 @@ class _WalletAuthScreenState extends State<WalletAuthScreen> {
                     width: 300,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => WalletVerificationScreen(user: widget.user,),
-                          ),
-                        );
+                        _navigateToExistingWallet();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: custom_colors.accentGreen,
