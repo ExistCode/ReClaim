@@ -30,7 +30,7 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   String _walletName = '';
   String? _walletAddress;
 
-   @override
+  @override
   void initState() {
     super.initState();
     _loadWalletAddress();
@@ -43,7 +43,7 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
       );
     }
   }
-  
+
   Future<void> _createWallet() async {
     AppUser tempUser = widget.user;
     if (_formKey.currentState!.validate()) {
@@ -126,7 +126,6 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             ),
           );
           print("User created successfully: ${user.uid}");
-
         } else {
           throw DioException(
             requestOptions: response.requestOptions,
@@ -153,8 +152,6 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
     }
   }
 
-
-
   Future<void> _loadWalletAddress() async {
     final prefs = await SharedPreferences.getInstance();
     final storedWalletAddress = prefs.getString('walletAddress');
@@ -162,7 +159,6 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
       setState(() {
         _walletAddress = storedWalletAddress;
       });
-
     }
   }
 
@@ -170,6 +166,15 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: custom_colors.primaryBackground,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () =>
+              Navigator.of(context).pop(), // Go to the previous screen
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(24.0),
@@ -178,7 +183,6 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(padding: EdgeInsets.all(20)),
                 Text(
                   'Enter Your Details',
                   style: TextStyle(
