@@ -88,13 +88,7 @@ class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => {
-                
-              },
-              child: Text('Move to dashboard'),
-            ),
+           
           ],
         ),
       ),

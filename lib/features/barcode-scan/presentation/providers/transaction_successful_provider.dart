@@ -6,6 +6,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class TransactionSuccessfulProvider extends ChangeNotifier {
+  String? _transactionHash;
+  int? _nonce;
+  String? get transactionHash => _transactionHash;
+  int? get nonce => _nonce;
   final Dio _dio = Dio();
 
   Future<void> transferTokens({
@@ -14,7 +18,6 @@ class TransactionSuccessfulProvider extends ChangeNotifier {
     required String contractAddress,
     required String callbackUrl,
   }) async {
-    
     final url = '${dotenv.env['API_URL']}/api/token/token-transfer';
     final options = Options(
       headers: {
@@ -39,7 +42,8 @@ class TransactionSuccessfulProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final result = response.data;
-        final transactionHash = result['result']['transactionHash'];
+        _transactionHash = result['result']['transactionHash'];
+        _nonce = result['result']['nonce'];
         final status = result['result']['status'];
 
         Fluttertoast.showToast(
