@@ -39,12 +39,11 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     final codeResult =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final transactionProvider =
         Provider.of<TransactionProvider>(context, listen: false);
-        
+
     final transactionSuccessfulProvider =
         Provider.of<TransactionSuccessfulProvider>(context, listen: false);
     final walletProvider = Provider.of<WalletProvider>(context, listen: false);
@@ -236,7 +235,9 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 12,),
+                            SizedBox(
+                              height: 12,
+                            ),
                             Text(
                               "Nonce:",
                               style: TextStyle(
@@ -262,11 +263,12 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  balanceProvider.fetchUserTransaction().then(
-                    (value) {
-                      Navigator.of(context).pop();
-                    },
-                  );
+                  Navigator.pop(context);
+                  // balanceProvider.fetchUserTransaction().then(
+                  //   (value) {
+                  //     Navigator.of(context).pop();
+                  //   },
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: custom_colors.accentGreen,

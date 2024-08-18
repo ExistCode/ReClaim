@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/barcode-scan/data/models/transaction_model.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
-import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
+
 import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import '../../../../core/navigation/navigation.dart';
 import '../widgets/main_menu_action_button.dart';
@@ -21,190 +20,119 @@ class DashboardScreen extends StatefulWidget {
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
-
 class _DashboardScreenState extends State<DashboardScreen> {
   TransactionProvider _transactionProvider = TransactionProvider();
-  BalanceProvider _balanceProvider = BalanceProvider();
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<BalanceProvider>(context, listen: false).fetchUserTransaction();
-  }
-
-  // Future<void> _fetchAllTransaction() async {
-  //   await _transactionProvider.fetchTransactionId();
-  //   await _transactionProvider.fetchAllTransactions();
-  //   // calculated fields after fetching
-  //   _calculateEarnings();
-  //   // Use the fetched transaction data in your page
-  //   _displayTransactionDetails();
-  // }
-
-  // void _displayTransactionDetails() {
-  //   // Access the fetched transaction data from _transactionProvider.loadedTransactionList
-  //   TransactionModel fetchedTransaction =
-  //       _transactionProvider.loadedTransactionList.first;
-  //   if (_transactionProvider.loadedTransactionList.isEmpty) {
-  //     print("No transactions found.");
-  //   } else {
-  //     // Display the transaction details in your page
-  //     print(
-  //         "the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
-  //     return; // Exit the method early
-  //   }
-  // }
-
-  // void _calculateEarnings() {
-  //   AppUser user = widget.user;
-  //   double templifetimeEarnings = 0.0;
-  //   int templifetimeRecycledItems = 0;
-
-  //   // for (int x = 0 ;(x < _transactionProvider.loadedTransactionList.length); x++){
-  //   for (var transaction in _transactionProvider.loadedTransactionList) {
-  //     try {
-  //       if (transaction.userId == user.uid) {
-  //         templifetimeEarnings += transaction.pointsRedeemed;
-  //         templifetimeRecycledItems += transaction.numOfCan +
-  //             transaction.numOfCartons +
-  //             transaction.numOfPlastic;
-
-  //         print("Current earnings: ${templifetimeEarnings}");
-  //       }
-  //     } on Exception catch (e) {
-  //       print("Can't Calculate!! The error message is ${e}");
-  //     }
-  //   }
-
-  //   // Call setState to update the UI after calculations
-  //   setState(() {
-  //     lifetimeEarnings = templifetimeEarnings;
-  //     lifetimeRecycledItems = templifetimeRecycledItems;
-  //   });
-
-  //   print("The total points earned: ${templifetimeEarnings}");
-  //   print("The total recycled items: ${templifetimeRecycledItems}");
-  // }
-
-  //Get BottomNavBar from GlobalKey to access onTap
-  BottomNavigationBar get navigationBar {
-    return NavigationState.globalKey.currentWidget as BottomNavigationBar;
-  }
 
   @override
   Widget build(BuildContext context) {
     AppUser user = widget.user;
     print("In dashboard screen: ${user.email}");
 
-    return Container(
-      color: custom_colors.primaryBackground,
-      width: double.infinity,
-      height: double.infinity,
-      child: RefreshIndicator(
-        color: custom_colors.accentGreen,
-        onRefresh: () async {
-          return Future<void>.delayed(
-            const Duration(seconds: 1),
-            (() {
-              // Provider.of<TransactionProvider>(context, listen: false)
-              //     .updateTransactionData();
-              // Provider.of<UserProvider>(context, listen: false)
-              //     .updateUserData();
-            }),
-          );
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  MainBalanceCard(),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: DraggableBottomSheet(
-                minExtent: 110,
-                barrierColor: Colors.transparent,
-                curve: Curves.easeIn,
-                expansionExtent: 0.5,
-                onDragging: (pos) {},
-                previewWidget: RecentTransactionsCard(
-                  user: user,
-                ),
-                expandedWidget: ExpandedRecentTransactionsCard(
-                  user: user,
-                ),
-                backgroundWidget: Padding(
+    return StreamBuilder<List<TransactionModel>>(
+      stream: _transactionProvider.getTransactionsStream(user.uid),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        List<TransactionModel> transactions = snapshot.data ?? [];
+        double lifetimeEarnings = calculateLifetimeEarnings(transactions);
+        int lifetimeRecycledItems =
+            calculateLifetimeRecycledItems(transactions);
+
+        return Container(
+          color: custom_colors.primaryBackground,
+          width: double.infinity,
+          height: double.infinity,
+          child: RefreshIndicator(
+            color: custom_colors.accentGreen,
+            onRefresh: () async {
+              // Refresh logic if needed
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            child: const MainMenuActionButton(
-                              'Insight',
-                              custom_colors.accentGreen,
-                              Icons.bar_chart,
-                            ),
-                            onTap: () {
-                              navigationBar.onTap!(1);
-                            },
-                          ),
-                          GestureDetector(
-                            child: const MainMenuActionButton(
-                                'Adjust',
-                                custom_colors.accentGreenVariant,
-                                Icons.settings),
-                            // onTap: (() => Navigator.of(context)
-                            //     .pushNamed(SettingScreen.routeName)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 60,
-                      ),
-                      Text(
-                        'Lifetime Earnings',
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(0.8), fontSize: 16),
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '${_balanceProvider.lifetimeEarnings} RCLM',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 26,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            '${_balanceProvider.recycledItems} items recycled',
-                            style: TextStyle(
-                                color: custom_colors.accentGreen, fontSize: 16),
-                          )
-                        ],
-                      )
+                      MainBalanceCard(userWalletAddress: user.walletAddress ?? '0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72', lifetimeEarnings: lifetimeEarnings,),
+                      const SizedBox(height: 40),
                     ],
                   ),
                 ),
-              ),
+                Expanded(
+                  child: DraggableBottomSheet(
+                    minExtent: 110,
+                    barrierColor: Colors.transparent,
+                    curve: Curves.easeIn,
+                    expansionExtent: 0.5,
+                    onDragging: (pos) {},
+                    previewWidget: RecentTransactionsCard(user: user),
+                    expandedWidget: ExpandedRecentTransactionsCard(user: user),
+                    backgroundWidget: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // ... (keep existing widgets)
+                          Text(
+                            'Lifetime Earnings',
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 16),
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '$lifetimeEarnings RCLM',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '$lifetimeRecycledItems items recycled',
+                                style: TextStyle(
+                                  color: custom_colors.accentGreen,
+                                  fontSize: 16,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  double calculateLifetimeEarnings(List<TransactionModel> transactions) {
+    return transactions.fold(
+        0.0, (sum, transaction) => sum + transaction.pointsRedeemed);
+  }
+
+  int calculateLifetimeRecycledItems(List<TransactionModel> transactions) {
+    return transactions.fold(
+        0,
+        (sum, transaction) =>
+            sum +
+            transaction.numOfCan +
+            transaction.numOfCartons +
+            transaction.numOfPlastic);
   }
 }

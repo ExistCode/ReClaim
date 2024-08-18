@@ -153,7 +153,7 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              MainBalanceCard(),
+              // MainBalanceCard(lifetimeEarnings: ,),
               const SizedBox(height: 20),
               SizedBox(
                 height: 90,
