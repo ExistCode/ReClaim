@@ -5,16 +5,19 @@ import '../providers/wallet_providers.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 
 class WalletVerificationScreen extends StatefulWidget {
+  
   static const routeName = '/wallet-verification-screen';
   late AppUser user;
   WalletVerificationScreen({Key? key, required this.user}) : super(key: key);
 
+  
   @override
   State<WalletVerificationScreen> createState() =>
       _WalletVerificationScreenState();
 }
 
 class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
+  
   final TextEditingController _walletIdController = TextEditingController();
   String _verificationMessage = '';
   final _verificationLogic = WalletProvider();
@@ -84,6 +87,13 @@ class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => {
+                
+              },
+              child: Text('Move to dashboard'),
             ),
           ],
         ),

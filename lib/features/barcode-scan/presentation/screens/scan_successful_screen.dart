@@ -66,14 +66,17 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
           numOfPlastics, numOfCans, numOfCartons, totalTokens);
 
       // Initiate token transfer
-      String userWalletAddress = walletProvider.walletAddress ?? '';
+      // String userWalletAddress = walletProvider.walletAddress ?? '';
+      String userWalletAddress = "0x0B4791748Df40cFeFCd2A3523b494FcB03886A31";
+
       if (userWalletAddress.isNotEmpty) {
         transactionSuccessfulProvider.transferTokens(
-          toAddress: userWalletAddress,
+          toAddress: '0x0B4791748Df40cFeFCd2A3523b494FcB03886A31',
           amount: totalTokens.toString(),
-          contractAddress: dotenv.env['ORGANIZATION_WALLET_ADDRESS'] ?? '',
+          contractAddress: dotenv.env['SMART_CONTRACT_ADDRESS'] ?? '',
           callbackUrl: 'https://your-callback-url.com/callback',
         );
+        print(".");
       } else {
         print('Error: User wallet address is empty');
       }
