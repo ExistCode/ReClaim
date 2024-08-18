@@ -142,6 +142,29 @@ class TransactionProvider with ChangeNotifier {
       print('Error fetching transactions for user ID $userId: $error');
     }
   }
+
+  Stream<List<TransactionModel>> getTransactionsStream(String userId) {
+    return _firebaseFirestore
+        .collection('transaction')
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) {
+      loadedTransactionList = snapshot.docs.map((doc) {
+        return TransactionModel(
+          transactionId: doc.id,
+          qrCodeId: doc['qrCodeId'],
+          userId: doc['userId'],
+          numOfPlastic: doc['numOfPlastic'],
+          numOfCan: doc['numOfCans'],
+          numOfCartons: doc['numOfCartons'],
+          pointsRedeemed: doc['pointsRedeemed'],
+          dateRedeemed: (doc['dateRedeemed'] as Timestamp).toDate(),
+        );
+      }).toList();
+      notifyListeners();
+      return loadedTransactionList;
+    });
+  }
 }
 
 

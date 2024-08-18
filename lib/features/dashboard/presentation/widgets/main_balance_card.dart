@@ -1,48 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
-  const MainBalanceCard({Key? key}) : super(key: key);
+  String userWalletAddress = "";
+  double lifetimeEarnings = 0.0;
+  MainBalanceCard({required this.userWalletAddress,  required this.lifetimeEarnings});
+
   @override
   Widget build(BuildContext context) {
-    BalanceProvider balanceProvider = BalanceProvider();
-    
     String walletAddress =
-        "0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72";
+        userWalletAddress;
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      height: 200,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage('assets/images/card_background.png'),
-            fit: BoxFit.cover,
+    return Consumer<BalanceProvider>(
+      builder: (context, balanceProvider, _) {
+        return Container(
+          padding: const EdgeInsets.all(20),
+          height: 200,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: AssetImage('assets/images/card_background.png'),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            color: custom_colors.darkGray,
           ),
-          borderRadius: BorderRadius.circular(16),
-          color: custom_colors.darkGray),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Your Wallet',
-            style:
-                TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Your Wallet',
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.7), fontSize: 14),
+              ),
+              Text(
+                '${lifetimeEarnings.toString()} RCLM',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 32,
+                ),
+              ),
+              Text(
+                'Address: ${walletAddress}',
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.2), fontSize: 10),
+              ),
+            ],
           ),
-          Text(
-            '${balanceProvider.lifetimeEarnings.toString()} RCLM',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 32),
-          ),
-          Text(
-            'Address: ${walletAddress}',
-            style:
-                TextStyle(color: Colors.white.withOpacity(0.2), fontSize: 10),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
