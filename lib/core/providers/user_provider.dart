@@ -6,13 +6,22 @@ class UserProvider with ChangeNotifier {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   List<AppUser> loadedUserList = [];
 
+  AppUser? currentUser; // Store the current user
+
+  // Method to set the current user
+  void setCurrentUser(AppUser user) {
+    currentUser = user;
+    notifyListeners(); // Notify listeners about the change
+  }
+
   Future<String> createNewUser(
     String uid,
     String email,
     String? name,
     String? ic,
     String? walletName,
-    String walletAddress,
+    String? walletAddress,
+    String? walletBalance,
   ) async {
     try {
       // Create a new document reference with an auto-generated ID
@@ -26,9 +35,12 @@ class UserProvider with ChangeNotifier {
         "ic": ic,
         "walletName": walletName,
         "walletAddress": walletAddress,
+        "walletBalance": "0.00",
       });
 
       print('User created successfully: $uid');
+      // loadedUserList.add(newUserRef as AppUser); // Add the new user to the list
+      //setCurrentUser(newUserRef as AppUser); // Set the current user
       return uid; // Return the user ID
     } catch (error) {
       print('Failed to create user: $error');
@@ -38,19 +50,17 @@ class UserProvider with ChangeNotifier {
 
   Future<void> updateUser(
     String uid,
-    String? email,
-    String? name,
     String? ic,
     String? walletName,
     String? walletAddress,
+    String? walletBalance,
   ) async {
     try {
       await _firebaseFirestore.collection('users').doc(uid).update({
-        "email": email,
-        "name": name,
         "ic": ic,
         "walletName": walletName,
         "walletAddress": walletAddress,
+        "walletBalance": walletBalance,
       });
       print('User updated successfully: $uid');
     } catch (error) {
@@ -71,6 +81,7 @@ class UserProvider with ChangeNotifier {
           ic: data['ic'],
           walletName: data['walletName'],
           walletAddress: data['walletAddress'],
+          walletBalance: data['walletBalance'],
         );
       }).toList();
       print('Success! Fetched user list: ${loadedUserList.length} users.');
@@ -92,6 +103,7 @@ class UserProvider with ChangeNotifier {
           ic: data['ic'],
           walletName: data['walletName'],
           walletAddress: data['walletAddress'],
+          walletBalance: data['walletBalance'],
         );
         print('Fetched user: ${user.uid}');
         return user;
@@ -104,4 +116,31 @@ class UserProvider with ChangeNotifier {
       return null;
     }
   }
+
+  // Getter for current user's wallet address
+  String? getCurrentUserName() {
+    return currentUser?.name;
+  }
+
+   // Getter for current user's email
+  String? getCurrentUserEmail() {
+    return currentUser?.email;
+  }
+
+  // Getter for current user's wallet address
+  String? getCurrentUserWalletName() {
+    return currentUser?.walletName;
+  }
+
+  // Getter for current user's wallet address
+  String? getCurrentUserWalletAddress() {
+    return currentUser?.walletAddress;
+  }
+
+   // Getter for current user's email
+  String? getCurrentUserBalance() {
+    return currentUser?.walletBalance;
+  }
+
+
 }

@@ -7,15 +7,17 @@ class AppUser {
   final String? ic;
   final String? walletName;
   final String? walletAddress;
+  final String? walletBalance;
   // Add other necessary user properties
 
   AppUser({
     required this.uid,
-    this.email,
+    required this.email,
     this.name,
     this.ic,
     this.walletName,
     this.walletAddress,
+    this.walletBalance,
     // Add other necessary parameters
   });
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
+import 'package:reclaim/core/providers/user_provider.dart';
 import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
 import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
@@ -19,6 +20,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  UserProvider _userProvider = UserProvider();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -40,16 +43,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
           .createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      )
-          .timeout(const Duration(seconds: 6), onTimeout: () {
+      ).timeout(const Duration(seconds: 6), onTimeout: () {
         throw TimeoutException('The request has timed out');
       });
+
       User? firebaseUser = userCredential.user;
       if (firebaseUser != null) {
         AppUser user = AppUser(
           uid: firebaseUser.uid,
           email: firebaseUser.email,
+          name: _nameController.text,
           // Add other necessary properties
+        );
+        await _userProvider.createNewUser(
+            user.uid, // Generate or retrieve a unique ID
+            user.email ?? '', // Provide a default value if user.email is null
+            _nameController.text,'','','',''
         );
         // Navigate to DashboardScreen with the user object
         print("before navigate: ${firebaseUser.email}");
@@ -128,6 +137,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: custom_colors.accentGreen),
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 20),
                     TextField(
