@@ -3,7 +3,6 @@ import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 import 'package:reclaim/features/donation/presentation/screens/donating_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/category.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
-
 import '../widgets/donation_box.dart';
 
 class DonationScreen extends StatefulWidget {
