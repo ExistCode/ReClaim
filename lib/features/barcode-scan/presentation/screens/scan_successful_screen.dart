@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:reclaim/features/barcode-scan/data/models/item_count.dart';
 import 'package:reclaim/features/barcode-scan/data/services/item_count_services.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
+import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 import 'dart:convert';
@@ -47,6 +48,8 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
     final transactionSuccessfulProvider =
         Provider.of<TransactionSuccessfulProvider>(context, listen: false);
     final walletProvider = Provider.of<WalletProvider>(context, listen: false);
+    final BalanceProvider balanceProvider =
+        Provider.of<BalanceProvider>(context, listen: false);
 
     final transactionId = codeResult['transactionId'];
     final qrCodeResult = codeResult['qrCodeValue'];
@@ -219,7 +222,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                             Text(
                               "Transaction Hash:",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.3),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -237,7 +240,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
                             Text(
                               "Nonce:",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.3),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -259,7 +262,11 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  balanceProvider.fetchUserTransaction().then(
+                    (value) {
+                      Navigator.of(context).pop();
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: custom_colors.accentGreen,

@@ -79,27 +79,12 @@ class _ExpandedRecentTransactionsCardState
   @override
   void initState() {
     super.initState();
-    _fetchAllTransaction();
+    _fetchUserTransactions();
   }
 
-  Future<void> _fetchAllTransaction() async {
-    await _transactionProvider.fetchTransactionId();
-    await _transactionProvider.fetchAllTransactions();
-    // Use the fetched transaction data in your page
-    _displayTransactionDetails();
+  Future<void> _fetchUserTransactions() async {
+    await _transactionProvider.fetchTransactionsByUserId(widget.user.uid);
     _retrieveRecentTransactions();
-  }
-
-  void _displayTransactionDetails() {
-    // Access the fetched transaction data from _transactionProvider.loadedTransactionList
-    if (_transactionProvider.loadedTransactionList.isEmpty) {
-      print("No transactions found.");
-    } else {
-      // Display the transaction details in your page
-      print(
-          "the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
-      return; // Exit the method early
-    }
   }
 
   void _retrieveRecentTransactions() {
@@ -107,56 +92,39 @@ class _ExpandedRecentTransactionsCardState
     int txLastIndex = _transactionProvider.loadedTransactionList.length - 1;
     int tempUniqueDateCount = 0;
 
-    // Ensure there are at least 5 transactions to process
-    if (txLastIndex < 4) {
-      print(
-          "Not enough transactions to process. current transaction count: ${txLastIndex + 1}");
+    // Ensure there are transactions to process
+    if (txLastIndex < 0) {
+      print("No transactions found for this user.");
+      setState(() {
+        _transactionList = [];
+        _uniqueDateCount = 0;
+      });
       return;
     }
 
-    for (int i = txLastIndex; i > (txLastIndex - 5); i--) {
+    // Get up to 5 most recent transactions
+    for (int i = txLastIndex; i >= 0 && i > (txLastIndex - 5); i--) {
       try {
-        if (_transactionProvider.loadedTransactionList[i] != null) {
-          _tempTransactionList
-              .add(_transactionProvider.loadedTransactionList[i]);
+        _tempTransactionList.add(_transactionProvider.loadedTransactionList[i]);
 
-          // Ensure there is a previous transaction to compare with
-          if (i > 0) {
-            String currentTransactionDate = DateFormat('dd MMM yy').format(
-                _transactionProvider.loadedTransactionList[i].dateRedeemed);
-            String previousTransactionDate = DateFormat('dd MMM yy').format(
-                _transactionProvider.loadedTransactionList[i - 1].dateRedeemed);
-
-            print("Current transaction date: ${currentTransactionDate} " +
-                "Previous transaction date: ${previousTransactionDate}");
-            if (i == txLastIndex) {
-              tempUniqueDateCount++;
-            } else {
-              if (currentTransactionDate != previousTransactionDate) {
-                tempUniqueDateCount++;
-              }
-            }
-          } else {
-            // Handle the case where there is no previous transaction
-            String currentTransactionDate = DateFormat('dd MMM yy').format(
-                _transactionProvider.loadedTransactionList[i].dateRedeemed);
-            print("Current transaction date: ${currentTransactionDate}");
-            tempUniqueDateCount++;
-          }
-
-          print("Current unique date count: ${tempUniqueDateCount}");
-          print("Current transaction count: ${i}");
-          print(
-              "Current temptransaction: ${_tempTransactionList[_tempTransactionList.length - 1].pointsRedeemed}");
+        // Count unique dates
+        if (i == txLastIndex ||
+            DateFormat('dd MMM yy').format(_transactionProvider
+                    .loadedTransactionList[i].dateRedeemed) !=
+                DateFormat('dd MMM yy').format(_transactionProvider
+                    .loadedTransactionList[i + 1].dateRedeemed)) {
+          tempUniqueDateCount++;
         }
       } catch (e) {
         print("Error processing transaction at index $i: $e");
       }
     }
+
     setState(() {
       _transactionList = _tempTransactionList;
       _uniqueDateCount = tempUniqueDateCount;
     });
+    
   }
   // void _retrieveRecentTransactions() {
   //   List<TransactionModel> _tempTransactionList = [];
