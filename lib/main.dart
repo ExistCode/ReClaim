@@ -11,6 +11,7 @@ import 'package:reclaim/features/barcode-scan/presentation/providers/transaction
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
+import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:reclaim/features/wallet/presentation/providers/wallet_providers.dart';
 import 'package:reclaim/features/wallet/presentation/screens/wallet_verification_screen.dart';
 import 'firebase_options.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
-import 'package:reclaim/features/dashboard/presentation/screens/donating_screen.dart'; // Import the Donating screen
+
+import '../screens/donating_screen.dart';
 
 class DonationBox extends StatelessWidget {
   final String imagePath;
