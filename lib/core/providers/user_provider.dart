@@ -25,9 +25,10 @@ class UserProvider with ChangeNotifier {
   ) async {
     try {
       // Create a new document reference with an auto-generated ID
-      DocumentReference newUserRef = _firebaseFirestore.collection('users').doc(uid);
+      DocumentReference newUserRef =
+          _firebaseFirestore.collection('users').doc(uid);
 
-      // Set the data for the new document 
+      // Set the data for the new document
       await newUserRef.set({
         "uid": uid,
         "email": email,
@@ -92,7 +93,8 @@ class UserProvider with ChangeNotifier {
 
   Future<AppUser?> fetchUserById(String uid) async {
     try {
-      final snapshot = await _firebaseFirestore.collection('users').doc(uid).get();
+      final snapshot =
+          await _firebaseFirestore.collection('users').doc(uid).get();
 
       if (snapshot.exists) {
         final data = snapshot.data()!;
@@ -118,11 +120,16 @@ class UserProvider with ChangeNotifier {
   }
 
   // Getter for current user's wallet address
+  String? getCurrentUserUid() {
+    return currentUser?.uid ;
+  }
+
+  // Getter for current user's wallet address
   String? getCurrentUserName() {
     return currentUser?.name;
   }
 
-   // Getter for current user's email
+  // Getter for current user's email
   String? getCurrentUserEmail() {
     return currentUser?.email;
   }
@@ -137,10 +144,8 @@ class UserProvider with ChangeNotifier {
     return currentUser?.walletAddress;
   }
 
-   // Getter for current user's email
+  // Getter for current user's email
   String? getCurrentUserBalance() {
     return currentUser?.walletBalance;
   }
-
-
 }

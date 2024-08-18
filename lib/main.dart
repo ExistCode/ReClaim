@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/authentication/presentation/screens/log_in_screen.dart';
 import 'package:reclaim/features/authentication/presentation/screens/sign_up_screen.dart';
+import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_successful_provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/screens/main_camera_screen.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: TransactionSuccessfulProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: BalanceProvider(),
         ),
       ],
       child: MaterialApp(
