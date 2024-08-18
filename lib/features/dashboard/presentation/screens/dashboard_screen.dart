@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/barcode-scan/data/models/transaction_model.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
+import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
@@ -22,6 +23,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   TransactionProvider _transactionProvider = TransactionProvider();
+  BalanceProvider _balanceProvider = BalanceProvider();
   double lifetimeEarnings = 0.00;
   int lifetimeRecycledItems = 0;
 
@@ -78,6 +80,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       lifetimeEarnings = templifetimeEarnings;
       lifetimeRecycledItems = templifetimeRecycledItems;
     });
+
+    _balanceProvider.fetchDashboardData(templifetimeEarnings, templifetimeRecycledItems);
 
     print("The total points earned: $lifetimeEarnings");
     print("The total recycled items: $lifetimeRecycledItems");

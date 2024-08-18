@@ -124,6 +124,7 @@ class _ExpandedRecentTransactionsCardState
       _transactionList = _tempTransactionList;
       _uniqueDateCount = tempUniqueDateCount;
     });
+    
   }
   // void _retrieveRecentTransactions() {
   //   List<TransactionModel> _tempTransactionList = [];

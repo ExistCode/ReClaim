@@ -39,13 +39,16 @@ class _LogInScreenState extends State<LogInScreen> {
         AppUser appuser = AppUser(
           uid: user.uid,
           email: user.email,
+          name: user.displayName,
           // Add other necessary properties
         );
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => WalletAuthScreen(user: appuser),
-          ),
-        );
+        if (_userProvider.getCurrentUserWalletAddress() != null) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => WalletAuthScreen(user: appuser),
+            ),
+          );
+        }
       } else {
         // User is signed out
         // Do nothing, stay on the login screen
@@ -93,7 +96,7 @@ class _LogInScreenState extends State<LogInScreen> {
         if (user.walletAddress != null) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (context) => DashboardScreen(user: user),
+              builder: (context) => Navigation(user: user),
             ),
           );
         } else {
