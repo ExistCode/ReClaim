@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
+  const MainBalanceCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double currentBal = 8.23347; //Change
+    BalanceProvider balanceProvider = BalanceProvider();
+    
     String walletAddress =
         "0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72";
 
@@ -29,7 +32,7 @@ class MainBalanceCard extends StatelessWidget {
                 TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14),
           ),
           Text(
-            '${currentBal.toString()} RCLM',
+            '${balanceProvider.lifetimeEarnings.toString()} RCLM',
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.w600, fontSize: 32),
           ),
