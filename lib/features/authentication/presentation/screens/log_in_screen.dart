@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:email_validator/email_validator.dart";
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
+import 'package:reclaim/core/providers/user_provider.dart';
 import 'package:reclaim/features/authentication/presentation/screens/sign_up_screen.dart';
 import 'package:reclaim/features/wallet/presentation/screens/wallet_auth_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/screens/dashboard_screen.dart';
@@ -20,6 +21,7 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  UserProvider _userProvider = UserProvider();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
@@ -76,18 +78,31 @@ class _LogInScreenState extends State<LogInScreen> {
 
       User? firebaseUser = userCredential.user;
       if (firebaseUser != null) {
-        AppUser user = AppUser(
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          // Add other necessary properties
-        );
+        AppUser user = await _userProvider.fetchUserById(firebaseUser.uid) as AppUser;
+        _userProvider.setCurrentUser(user);
+        // AppUser user = AppUser(
+        //   uid: firebaseUser.uid,
+        //   email: firebaseUser.email,
+        //   name: firebaseUser.displayName,
+        //   // Add other necessary properties
+        // );
         // Navigate to DashboardScreen with the user object
-        print("before navigate: ${firebaseUser.email}");
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => WalletCreationPage(user: user),
-          ),
-        );
+        print("before navigate email: ${_userProvider.getCurrentUserEmail()}");
+        print("before navigate address?: ${_userProvider.getCurrentUserWalletAddress()}");
+
+        if (user.walletAddress != null) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen(user: user),
+            ),
+          );
+        } else {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => WalletAuthScreen(user: user),
+            ),
+          );
+        }
       }
       return userCredential;
 

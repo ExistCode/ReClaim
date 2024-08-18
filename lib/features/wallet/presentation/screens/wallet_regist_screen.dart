@@ -29,6 +29,7 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   String _ic = '';
   String _walletName = '';
   String? _walletAddress;
+  String _walletBalance = '0.00';
 
   @override
   void initState() {
@@ -97,16 +98,16 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
             ic: _ic,
             walletName: _walletName,
             walletAddress: walletAddress,
+            walletBalance: _walletBalance,
           );
 
           // Save user details to Firestore
-          await _userProvider.createNewUser(
-            user.uid,
-            user.email.toString(),
-            user.name,
-            user.ic,
-            user.walletName,
-            user.walletAddress.toString(),
+          await _userProvider.updateUser(
+            tempUser.uid, // Generate or retrieve a unique ID
+            _ic,
+            _walletName,
+            walletAddress,
+            _walletBalance,
           );
 
           // Store wallet address in SharedPreferences
