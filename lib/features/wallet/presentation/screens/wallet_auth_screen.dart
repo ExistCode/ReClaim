@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/core/navigation/navigation.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 import 'package:reclaim/features/wallet/presentation/screens/wallet_regist_screen.dart';
+import 'package:reclaim/features/wallet/presentation/screens/wallet_verification_screen.dart';
 // Import your screen files
 
 class WalletAuthScreen extends StatefulWidget {
@@ -23,8 +24,7 @@ class _WalletAuthScreenState extends State<WalletAuthScreen> {
 
   void _navigateToCreateWallet() {
     Navigator.of(context).push(
-      MaterialPageRoute(
-          builder: (context) => WalletCreationPage(user: widget.user)),
+      MaterialPageRoute(builder: (context) => WalletCreationPage(user: widget.user)),
     );
   }
 
@@ -60,8 +60,13 @@ class _WalletAuthScreenState extends State<WalletAuthScreen> {
                   SizedBox(
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () {},
-                      // _navigateToExistingWallet,
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => WalletVerificationScreen(user: widget.user,),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: custom_colors.accentGreen,
                         padding:
