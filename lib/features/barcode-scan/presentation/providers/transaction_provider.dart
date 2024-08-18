@@ -107,4 +107,41 @@ class TransactionProvider with ChangeNotifier {
       print('Error fetching transaction with ID $transactionId: $error');
     }
   }
+  Future<void> fetchTransactionsByUserId(String userId) async {
+    print('Fetching transactions for user ID: $userId');
+    try {
+      // Query the Firestore collection for documents matching the user ID
+      final snapshot = await _firebaseFirestore
+          .collection('transaction')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      // Clear the loadedTransactionList before adding new transactions
+      loadedTransactionList.clear();
+
+      // Iterate through the query results and create TransactionModel instances
+      for (var doc in snapshot.docs) {
+        TransactionModel loadedTransaction = TransactionModel(
+          transactionId: doc.id, // Use the document ID
+          qrCodeId: doc.data()['qrCodeId'],
+          userId: doc.data()['userId'],
+          numOfPlastic: doc.data()['numOfPlastic'],
+          numOfCan: doc.data()['numOfCans'],
+          numOfCartons: doc.data()['numOfCartons'],
+          pointsRedeemed: doc.data()['pointsRedeemed'],
+          dateRedeemed: (doc.data()['dateRedeemed'] as Timestamp)
+              .toDate(), // Convert Timestamp to DateTime
+        );
+
+        loadedTransactionList.add(loadedTransaction);
+        print('Fetched transaction: ${loadedTransaction.transactionId}');
+      }
+
+      print('Successfully fetched transactions for user ID: $userId');
+    } catch (error) {
+      print('Error fetching transactions for user ID $userId: $error');
+    }
+  }
 }
+
+

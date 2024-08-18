@@ -11,7 +11,6 @@ import 'package:draggable_bottom_sheet/draggable_bottom_sheet.dart';
 import '../../../../core/navigation/navigation.dart';
 import '../widgets/main_menu_action_button.dart';
 import '../widgets/recent_transaction_card.dart';
-
 class DashboardScreen extends StatefulWidget {
   static const routeName = '/dashboard-screen';
   final AppUser user;
@@ -29,13 +28,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchAllTransaction();
+    _fetchUserTransactions();
   }
 
-  Future<void> _fetchAllTransaction() async {
-    await _transactionProvider.fetchTransactionId();
-    await _transactionProvider.fetchAllTransactions();
-    // calculated fields after fetching
+  Future<void> _fetchUserTransactions() async {
+    // Fetch transactions specifically for the logged-in user
+    await _transactionProvider.fetchTransactionsByUserId(widget.user.uid);
+    // Calculate fields after fetching
     _calculateEarnings();
     // Use the fetched transaction data in your page
     _displayTransactionDetails();
@@ -43,26 +42,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _displayTransactionDetails() {
     // Access the fetched transaction data from _transactionProvider.loadedTransactionList
-    TransactionModel fetchedTransaction =
-        _transactionProvider.loadedTransactionList.first;
     if (_transactionProvider.loadedTransactionList.isEmpty) {
       print("No transactions found.");
     } else {
       // Display the transaction details in your page
       print(
-          "the fetched transaction sample are = ${_transactionProvider.loadedTransactionList[2].pointsRedeemed}");
-      return; // Exit the method early
+          "Sample fetched transaction points redeemed: ${_transactionProvider.loadedTransactionList[0].pointsRedeemed}");
     }
   }
 
   void _calculateEarnings() {
     AppUser user = widget.user;
-    double templifetimeEarnings = 1.0;
+
+    double templifetimeEarnings = 0.0;
     int templifetimeRecycledItems = 0;
 
-    // for (int x = 0 ;(x < _transactionProvider.loadedTransactionList.length); x++){
     for (var transaction in _transactionProvider.loadedTransactionList) {
       try {
+        // Only calculate for the current user's transactions
         if (transaction.userId == user.uid) {
           templifetimeEarnings += transaction.pointsRedeemed;
           templifetimeRecycledItems += transaction.numOfCan +
@@ -71,8 +68,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           print("Current earnings: ${templifetimeEarnings}");
         }
-      } on Exception catch (e) {
-        print("Can't Calculate!! The error message is ${e}");
+      } catch (e) {
+        print("Can't Calculate!! The error message is $e");
       }
     }
 
@@ -82,11 +79,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       lifetimeRecycledItems = templifetimeRecycledItems;
     });
 
-    print("The total points earned: ${templifetimeEarnings}");
-    print("The total recycled items: ${templifetimeRecycledItems}");
+    print("The total points earned: $lifetimeEarnings");
+    print("The total recycled items: $lifetimeRecycledItems");
   }
 
-  //Get BottomNavBar from GlobalKey to access onTap
+  // Get BottomNavBar from GlobalKey to access onTap
   BottomNavigationBar get navigationBar {
     return NavigationState.globalKey.currentWidget as BottomNavigationBar;
   }
@@ -106,27 +103,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return Future<void>.delayed(
             const Duration(seconds: 1),
             (() {
-              // Provider.of<TransactionProvider>(context, listen: false)
-              //     .updateTransactionData();
-              // Provider.of<UserProvider>(context, listen: false)
-              //     .updateUserData();
+              // You can add refresh logic here if needed
             }),
           );
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   MainBalanceCard(),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),
@@ -137,12 +127,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 curve: Curves.easeIn,
                 expansionExtent: 0.5,
                 onDragging: (pos) {},
-                previewWidget: RecentTransactionsCard(
-                  user: user,
-                ),
-                expandedWidget: ExpandedRecentTransactionsCard(
-                  user: user,
-                ),
+                previewWidget: RecentTransactionsCard(user: user),
+                expandedWidget: ExpandedRecentTransactionsCard(user: user),
                 backgroundWidget: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
@@ -166,14 +152,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 'Adjust',
                                 custom_colors.accentGreenVariant,
                                 Icons.settings),
-                            // onTap: (() => Navigator.of(context)
-                            //     .pushNamed(SettingScreen.routeName)),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 60,
-                      ),
+                      const SizedBox(height: 60),
                       Text(
                         'Lifetime Earnings',
                         style: TextStyle(
