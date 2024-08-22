@@ -22,6 +22,10 @@ class DashboardScreen extends StatefulWidget {
 }
 class _DashboardScreenState extends State<DashboardScreen> {
   TransactionProvider _transactionProvider = TransactionProvider();
+   // Get BottomNavBar from GlobalKey to access onTap
+  BottomNavigationBar get navigationBar {
+    return NavigationState.globalKey.currentWidget as BottomNavigationBar;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +84,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ... (keep existing widgets)
+                         
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                child: const MainMenuActionButton(
+                                  'Insight',
+                                  custom_colors.accentGreen,
+                                  Icons.bar_chart,
+                                ),
+                                onTap: () {
+                                  navigationBar.onTap!(1);
+                                },
+                              ),
+                              GestureDetector(
+                                child: const MainMenuActionButton(
+                                    'Adjust',
+                                    custom_colors.accentGreenVariant,
+                                    Icons.settings),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20,),
                           Text(
                             'Lifetime Earnings',
                             style: TextStyle(
@@ -119,6 +145,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
       },
     );
+    
   }
 
   double calculateLifetimeEarnings(List<TransactionModel> transactions) {
@@ -136,3 +163,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
             transaction.numOfPlastic);
   }
 }
+
