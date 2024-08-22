@@ -23,13 +23,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await dotenv.load(fileName: ".env");
-  final client = AptosClient('https://api.devnet.aptoslabs.com/v1');
-  runApp(MyApp(client: client));
+  
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final AptosClient client;
-  const MyApp({super.key, required this.client});
+  
+  const MyApp({super.key, });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ReClaim',
         theme: ThemeData(fontFamily: 'Inter'),
-        home: SignUpScreen(),
+        home: LogInScreen(),
         routes: {
           MainCameraScreen.routeName: (context) => const MainCameraScreen(),
           ScanSuccessfulScreen.routeName: (context) =>

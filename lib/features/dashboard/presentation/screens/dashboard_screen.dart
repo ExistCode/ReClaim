@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/features/barcode-scan/data/models/transaction_model.dart';
@@ -21,6 +22,7 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 class _DashboardScreenState extends State<DashboardScreen> {
+  
   TransactionProvider _transactionProvider = TransactionProvider();
    // Get BottomNavBar from GlobalKey to access onTap
   BottomNavigationBar get navigationBar {
@@ -31,6 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     AppUser user = widget.user;
     print("In dashboard screen: ${user.email}");
+    print("In dashboard: ${user.walletAddress}");
 
     return StreamBuilder<List<TransactionModel>>(
       stream: _transactionProvider.getTransactionsStream(user.uid),
@@ -65,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     children: [
-                      MainBalanceCard(userWalletAddress: user.walletAddress ?? '0x1bcdd770a0bffb23cbad2de13ff89f0275180bd3feb7f421a2b330f6e0b5db72', lifetimeEarnings: lifetimeEarnings,),
+                      MainBalanceCard(user: user,),
                       const SizedBox(height: 40),
                     ],
                   ),

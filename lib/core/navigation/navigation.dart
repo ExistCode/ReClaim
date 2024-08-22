@@ -25,7 +25,7 @@ class NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     // Initialize the screens list with the user parameter
-    screens = [DashboardScreen(user: widget.user), DonationScreen()];
+    screens = [DashboardScreen(user: widget.user), DonationScreen(user: widget.user)];
   }
 
   @override

@@ -95,7 +95,8 @@ class _LogInScreenState extends State<LogInScreen> {
         print(
             "before navigate address?: ${_userProvider.getCurrentUserWalletAddress()}");
 
-        if (user.walletAddress != null) {
+        if (user.walletAddress != "") {
+          print(user.walletAddress);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => Navigation(user: user),

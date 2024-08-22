@@ -3,18 +3,21 @@ import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 import 'package:reclaim/features/donation/presentation/screens/donating_screen.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/category.dart';
 import 'package:reclaim/features/dashboard/presentation/widgets/main_balance_card.dart';
+import '../../../../core/models/app_user.dart';
 import '../widgets/donation_box.dart';
 
 class DonationScreen extends StatefulWidget {
-  const DonationScreen({super.key});
+  
+  final AppUser user;
+  DonationScreen({required this.user});
 
   @override
   State<DonationScreen> createState() => _DonationScreenState();
 }
 
 class _DonationScreenState extends State<DonationScreen> {
+  
   int selectedCategoryIndex = 0;
-
   void onCategorySelected(int index) {
     setState(() {
       selectedCategoryIndex = index;
@@ -125,6 +128,7 @@ class _DonationScreenState extends State<DonationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppUser user = widget.user;
     String greetingMessage = getGreetingMessage();
 
     final filteredDonationBoxes = donationBoxes.where((box) {
@@ -153,7 +157,7 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // MainBalanceCard(lifetimeEarnings: ,),
+              MainBalanceCard(user: user,),
               const SizedBox(height: 20),
               SizedBox(
                 height: 90,

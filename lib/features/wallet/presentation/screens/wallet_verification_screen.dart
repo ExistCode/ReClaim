@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reclaim/core/models/app_user.dart';
 import 'package:reclaim/core/navigation/navigation.dart';
+import 'package:reclaim/core/providers/user_provider.dart';
 import '../providers/wallet_providers.dart';
 import 'package:reclaim/core/theme/colors.dart' as custom_colors;
 
@@ -15,9 +16,11 @@ class WalletVerificationScreen extends StatefulWidget {
 }
 
 class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
+  UserProvider _userProvider = UserProvider();
   final TextEditingController _walletIdController = TextEditingController();
   String _verificationMessage = '';
   final _verificationLogic = WalletProvider();
+  
 
   Future<void> _verifyWalletId() async {
     String walletId = _walletIdController.text.trim();
@@ -34,6 +37,7 @@ class _WalletVerificationScreenState extends State<WalletVerificationScreen> {
     });
 
     final message = await _verificationLogic.WalletVerificationId(walletId);
+    _userProvider.updateUserWallet(widget.user.uid, walletId);
 
     setState(() {
       _verificationMessage = message;

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reclaim/features/dashboard/presentation/providers/balance_provider.dart';
+import '../../../../core/models/app_user.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainBalanceCard extends StatelessWidget {
-  String userWalletAddress = "";
-  double lifetimeEarnings = 0.0;
-  MainBalanceCard({required this.userWalletAddress,  required this.lifetimeEarnings});
+  final AppUser user;
+  
+  
+  MainBalanceCard({required this.user});
 
   @override
   Widget build(BuildContext context) {
     String walletAddress =
-        userWalletAddress;
+        user.walletAddress.toString();
+    String lifetimeEarnings = user.walletBalance.toString();
 
     return Consumer<BalanceProvider>(
       builder: (context, balanceProvider, _) {
@@ -37,7 +40,7 @@ class MainBalanceCard extends StatelessWidget {
                     color: Colors.white.withOpacity(0.7), fontSize: 14),
               ),
               Text(
-                '${lifetimeEarnings.toString()} RCLM',
+                '${lifetimeEarnings != ""? lifetimeEarnings : 0.0} RCLM',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -45,7 +48,7 @@ class MainBalanceCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Address: ${walletAddress}',
+                'Address: ${walletAddress != ""? walletAddress : "Not available"}',
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.2), fontSize: 10),
               ),

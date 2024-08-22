@@ -21,7 +21,7 @@ class UserProvider with ChangeNotifier {
     String? ic,
     String? walletName,
     String? walletAddress,
-    String? walletBalance,
+    double? walletBalance,
   ) async {
     try {
       // Create a new document reference with an auto-generated ID
@@ -36,7 +36,7 @@ class UserProvider with ChangeNotifier {
         "ic": ic,
         "walletName": walletName,
         "walletAddress": walletAddress,
-        "walletBalance": "0.00",
+        "walletBalance": 0.00,
       });
 
       print('User created successfully: $uid');
@@ -68,6 +68,35 @@ class UserProvider with ChangeNotifier {
       print('Failed to update user: $error');
     }
   }
+  Future<void> updateUserWallet(
+    String uid,
+    String? walletAddress,
+  ) async {
+    try {
+      await _firebaseFirestore.collection('users').doc(uid).update({
+
+        "walletAddress": walletAddress,
+        
+      });
+      print('User updated successfully: $uid');
+    } catch (error) {
+      print('Failed to update user: $error');
+    }
+  }
+  Future<void> updateUserBalance(
+    String uid,
+    String? walletBalance,
+  ) async {
+    try {
+      await _firebaseFirestore.collection('users').doc(uid).update({
+        "walletBalance": walletBalance,
+      });
+      print('User updated successfully: $uid');
+    } catch (error) {
+      print('Failed to update user: $error');
+    }
+  }
+
 
   Future<void> fetchAllUsers() async {
     print('Fetching all users...');
@@ -119,6 +148,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+
   // Getter for current user's wallet address
   String? getCurrentUserUid() {
     return currentUser?.uid ;
@@ -148,4 +178,6 @@ class UserProvider with ChangeNotifier {
   String? getCurrentUserBalance() {
     return currentUser?.walletBalance;
   }
+
+  
 }

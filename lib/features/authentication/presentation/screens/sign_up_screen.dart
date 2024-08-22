@@ -63,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             '',
             '',
             '',
-            '');
+            0.0);
         // Navigate to DashboardScreen with the user object
         print("before navigate: ${firebaseUser.email}");
         Navigator.of(context).pushReplacement(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
+import 'package:reclaim/features/barcode-scan/presentation/screens/scan_successful_screen.dart';
 import '../../../../core/theme/colors.dart' as custom_colors;
 
 class MainCameraScreen extends StatefulWidget {
@@ -103,6 +104,7 @@ class _MainCameraScreenState extends State<MainCameraScreen> {
                               .then((transactionId) {
                             print("transactionid: " + transactionId);
                             // Navigate to the scan success screen and pass the transactionId
+                            
                             Navigator.of(context).pushNamed(
                               '/scan-successful-screen',
                               arguments: {

@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:reclaim/core/models/app_user.dart';
+import 'package:reclaim/core/providers/user_provider.dart';
 import 'package:reclaim/features/barcode-scan/data/models/item_count.dart';
 import 'package:reclaim/features/barcode-scan/data/services/item_count_services.dart';
 import 'package:reclaim/features/barcode-scan/presentation/providers/transaction_provider.dart';
@@ -39,10 +42,15 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    print("Current User: " + currentUser!.uid);
     final codeResult =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final transactionProvider =
         Provider.of<TransactionProvider>(context, listen: false);
+    final _userProvider = Provider.of<UserProvider>(context, listen: false);
+    Future<AppUser?> _currentUser = UserProvider().fetchUserById(currentUser.uid);
 
     final transactionSuccessfulProvider =
         Provider.of<TransactionSuccessfulProvider>(context, listen: false);
@@ -72,7 +80,7 @@ class _ScanSuccessfulScreenState extends State<ScanSuccessfulScreen> {
       // Initiate token transfer
       // String userWalletAddress = walletProvider.walletAddress ?? '';
       String userWalletAddress = "0x0B4791748Df40cFeFCd2A3523b494FcB03886A31";
-
+      
       if (userWalletAddress.isNotEmpty) {
         transactionSuccessfulProvider.transferTokens(
           toAddress: '0x0B4791748Df40cFeFCd2A3523b494FcB03886A31',

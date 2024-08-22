@@ -29,13 +29,13 @@ class _WalletCreationPageState extends State<WalletCreationPage> {
   String _ic = '';
   String _walletName = '';
   String? _walletAddress;
-  String _walletBalance = '0.00';
+  String _walletBalance ="0.0";
 
   @override
   void initState() {
     super.initState();
     _loadWalletAddress();
-    if (widget.user.walletAddress != null) {
+    if (widget.user.walletAddress != "") {
       // If the user already has a wallet address, navigate to the Dashboard
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
